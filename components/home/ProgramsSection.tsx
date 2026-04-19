@@ -38,11 +38,11 @@ function ProgramRow({
           isOpen && "border-accent",
           !isOpen &&
             program.accentBundle &&
-            "border-accent/80 hover:border-accent",
+            "border-accent/80 lg:hover:border-accent",
           !isOpen &&
             !program.accentBundle &&
-            "border-foreground/10 hover:border-foreground/20",
-          isDimmed && "opacity-80 hover:opacity-100",
+            "border-foreground/10 lg:hover:border-foreground/20",
+          isDimmed && "opacity-80 lg:hover:opacity-100",
         )}
       >
         <button
@@ -56,15 +56,15 @@ function ProgramRow({
             !isOpen && "group/pkg",
             "min-h-[7.5rem] sm:min-h-[8.5rem]",
             !isOpen &&
-              "hover:bg-accent/[1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-            isOpen && "bg-foreground/[0.06] hover:bg-foreground/[0.06]",
+              "lg:hover:bg-accent/[1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+            isOpen && "bg-foreground/[0.06] lg:hover:bg-foreground/[0.06]",
           )}
         >
           <div className="flex min-h-[4.5rem] flex-col gap-4 sm:min-h-0 sm:flex-row sm:items-center sm:gap-6 lg:gap-10">
             <span
               className={cn(
                 "font-heading text-xs tracking-[0.2em] text-accent transition-colors sm:text-sm",
-                !isOpen && "group-hover/pkg:text-[#111]",
+                !isOpen && "lg:group-hover/pkg:text-[#111]",
                 isOpen && "text-accent",
               )}
             >
@@ -82,7 +82,7 @@ function ProgramRow({
                   className={cn(
                     "font-heading text-xl font-bold uppercase transition-colors sm:text-3xl lg:text-4xl xl:text-5xl",
                     isOpen && "text-[#fff]",
-                    !isOpen && "text-foreground group-hover/pkg:text-[#111]",
+                    !isOpen && "text-foreground lg:group-hover/pkg:text-[#111]",
                   )}
                 >
                   {program.title}
@@ -93,9 +93,9 @@ function ProgramRow({
                   className={cn(
                     "ml-auto shrink-0 font-heading text-[10px] uppercase tracking-[0.18em] transition-all duration-300 ease-out sm:ml-0",
                     "pointer-events-none translate-x-2 opacity-0",
-                    "group-hover/pkg:translate-x-0 group-hover/pkg:opacity-100",
+                    "lg:group-hover/pkg:translate-x-0 lg:group-hover/pkg:opacity-100",
                     isOpen && "translate-x-0 opacity-100",
-                    !isOpen && "text-accent group-hover/pkg:text-[#111]",
+                    !isOpen && "text-accent lg:group-hover/pkg:text-[#111]",
                     isOpen && "text-accent",
                   )}
                 >
@@ -111,8 +111,8 @@ function ProgramRow({
                   isOpen
                     ? "text-accent"
                     : program.hideDescription && program.discountBadge
-                      ? "text-accent group-hover/pkg:text-[#111]"
-                      : "text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/80 sm:text-[11px] group-hover/pkg:text-[#111]",
+                      ? "text-accent lg:group-hover/pkg:text-[#111]"
+                      : "text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/80 sm:text-[11px] lg:group-hover/pkg:text-[#111]",
                 )}
               >
                 {isOpen ? (
@@ -199,7 +199,7 @@ function ProgramRow({
 
                 <Link
                   href={program.panelCta.href}
-                  className="inline-flex w-fit items-center justify-center border border-accent bg-transparent px-6 py-3 font-heading text-[10px] uppercase tracking-[0.2em] text-accent transition-colors hover:bg-accent hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-xs"
+                  className="inline-flex w-fit items-center justify-center border border-accent bg-transparent px-6 py-3 font-heading text-[10px] uppercase tracking-[0.2em] text-accent transition-colors lg:hover:bg-accent lg:hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-xs"
                 >
                   {program.panelCta.label}
                 </Link>

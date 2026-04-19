@@ -100,11 +100,11 @@ export function MethodSection() {
                 triggerOnScroll
               >
                 {tile.type === "stat" ? (
-                  <div className="group min-w-[274px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 transition-colors hover:border-foreground/20 sm:p-8">
+                  <div className="group min-w-[274px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 transition-colors lg:hover:border-foreground/20 sm:p-8">
                     <p className="font-heading text-[10px] uppercase tracking-[0.2em] text-accent sm:text-xs">
                       {tile.id} / {tile.label}
                     </p>
-                    <p className="py-6 font-heading text-5xl font-normal text-foreground transition-colors group-hover:text-accent sm:text-6xl">
+                    <p className="py-6 font-heading text-5xl font-normal text-foreground transition-colors lg:group-hover:text-accent sm:text-6xl">
                       {tile.value}
                     </p>
                     <p className="font-heading text-[10px] uppercase tracking-[0.25em] text-foreground/50 sm:text-xs">
@@ -114,7 +114,7 @@ export function MethodSection() {
                 ) : (
                   <Link
                     href={tile.href}
-                    className="group flex h-full min-h-[180px] flex-col items-center justify-center gap-3 rounded-lg bg-accent p-6 transition-opacity hover:opacity-90 sm:p-8"
+                    className="group flex h-full min-h-[180px] flex-col items-center justify-center gap-3 rounded-lg bg-accent p-6 transition-opacity lg:hover:opacity-90 sm:p-8"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
