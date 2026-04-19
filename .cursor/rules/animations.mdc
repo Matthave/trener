@@ -1,0 +1,43 @@
+---
+description: Zasady tworzenia animacji z wykorzystaniem Motion (Framer Motion)
+globs: **/*.{ts,tsx}
+---
+
+# Animacje i Motion (Framer Motion)
+
+Projekt wykorzystuje bibliotekę Motion (dawniej Framer Motion) do wzbogacania interfejsu (np. płynne przejścia między krokami wywiadu, pojawianie się elementów). Dbamy o wydajność i dostępność.
+
+## 1. Wymogi Techniczne
+
+- **Client Components:** Komponenty używające `motion.div` i pochodnych muszą posiadać dyrektywę `"use client"` na górze pliku.
+- **Import:** Używaj standardowego importu `import { motion } from "framer-motion";` (lub zgodnie z najnowszą specyfikacją paczki `motion`).
+
+## 2. Architektura i Reużywalność
+
+- **Unikanie duplikacji:** Nie zanieczyszczaj kodu UI długimi obiektami z propsami konfiguracyjnymi animacji.
+- **Wrappery:** Twórz reużywalne komponenty animacji w `/components/animations/` (np. `<FadeIn>`, `<SlideUp>`, `<StaggerChildren>`) i zamykaj w nich specyfikę Motion.
+  ```tsx
+  // Przykład użycia wrappera:
+  <FadeIn delay={0.2}>
+    <Card>...</Card>
+  </FadeIn>
+  ```
+
+## 3. Wydajność
+
+- **Animowane właściwości:** Animuj wyłącznie właściwości opacity oraz transform (np. x, y, scale). Te właściwości są akcelerowane sprzętowo przez GPU i nie wywołują procesu reflow w przeglądarce.
+
+- **Layout Animations:** Używaj propa layout ostrożnie – tylko tam, gdzie to niezbędne (np. zmiana rozmiaru karty lub sortowanie list).
+
+## 4.Dostępność (A11y) - ZASADA KRYTYCZNA
+
+- **Redukcja ruchu:** Zawsze uwzględniaj preferencje systemowe użytkownika. Zaimplementuj hook useReducedMotion.
+
+- Jeśli użytkownik włączył w systemie opcję redukcji ruchu, animacje powinny być całkowicie wyłączone lub zastąpione zwykłym pojawianiem się (samo opacity, bez y/x transform).
+
+```tsx
+const shouldReduceMotion = useReducedMotion();
+// Zastosuj tę zmienną do wariantów animacji, aby je wyłączyć, gdy jest true.
+```
+
+- **AnimatePresence:** Podczas używania <AnimatePresence> do animowania wychodzących komponentów (unmount), zawsze pamiętaj o dodaniu klucza (key) do bezpośredniego dziecka motion.\*.

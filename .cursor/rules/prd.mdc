@@ -1,0 +1,56 @@
+---
+description: Rdzeń PRD — wizja produktu, stack, design system, granice MVP. Szczegółowe historyjki użytkowników w pliku user-stories.mdc.
+alwaysApply: true
+---
+
+# PRD — Trener Personalny (skrót)
+
+## Wizja
+
+Minimalistyczna strona-wizytówka trenera personalnego (trening + dieta + suplementacja + sen/regeneracja). Główna oś konwersji: wielostronicowy formularz startowy (~15 sekcji) z uploadem plików i opcjonalnym zakładaniem konta.
+
+## Stack technologiczny
+
+- Next.js (App Router, Server Actions)
+- React Hook Form + Zod + Zustand (persist → localStorage)
+- Tailwind CSS + Shadcn/ui + SCSS modules + Framer Motion
+- Cloudinary (pliki), @react-pdf/renderer (PDF), Resend (e-mail)
+
+## Design system
+
+- Styl: Swiss Design + brutalistyczny minimalizm, typographic-led (minimum zdjęć)
+- Tło: #111 | Tekst/obramowania: #C6C6C6 | Akcent: #9FC6FF
+- Fonty: Michroma (nagłówki), Inter (tekst ciągły)
+- RWD: mobile-first, 320px–2560px
+
+## Zakres MVP
+
+1. Strona główna (wizytówka z ofertą trenera)
+2. Formularz kontaktowy (imię, e-mail, temat, treść → Resend → admin)
+3. Formularz startowy — ~15 sekcji, progress bar, auto-zapis (Zustand persist), upload plików (Cloudinary), drag & drop. Ostatni krok: "Wyślij jako Gość" (szary) / "Załóż konto i wyślij" (#00A19C + pole hasła). Po wysłaniu: ekran podziękowania, e-mail do użytkownika, PDF z odpowiedziami + linki Cloudinary → e-mail do admina.
+4. Rejestracja i logowanie (e-mail + hasło, hashowanie, sesje httpOnly cookies)
+5. Profil użytkownika (tylko odczyt: imię, e-mail, data rejestracji; chroniona trasa)
+6. Nawigacja responsywna (menu mobilne, wyróżniona aktywna podstrona)
+
+## Granice — NIE wchodzi w MVP
+
+- Rozbudowany profil (edycja, plany treningowe, historia)
+- Panel blogowy, komentarze, lajki
+- Kreator/organizer treningów
+- Aplikacje mobilne (tylko web)
+- Regulaminy, RODO
+- Panel administracyjny
+- Reset hasła, weryfikacja e-mail, OAuth
+- Integracje zewnętrzne (kalendarz, płatności)
+
+## Wymagania jakościowe
+
+- Lighthouse Performance i Accessibility: min. 90 pkt
+- WCAG AA (kontrast, aria, obsługa klawiatury)
+- FCP < 1.5s, LCP < 2.5s, CLS < 0.1
+- Walidacja Zod: klient + serwer na każdym formularzu
+- Rate limiting na logowaniu
+
+## Referencja
+
+Pełne historyjki użytkowników (US-001 – US-026) z kryteriami akceptacji → plik `.cursor/rules/user-stories.mdc`.

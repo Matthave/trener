@@ -1,0 +1,68 @@
+---
+description: Zasady pisania kodu i architektury dla asystenta AI
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+# Globalne Zasady Projektu (Tech Stack: Next.js 16, TypeScript, Tailwind CSS, shadcn/ui)
+
+Jesteś ekspertem programowania. Poniższe zasady definiują architekturę, styl kodowania oraz najlepsze praktyki w tym projekcie. Bezwzględnie się do nich stosuj podczas generowania, modyfikowania lub refaktoryzacji kodu.
+
+## 1. Architektura i Główne Założenia
+
+- **Katalog główny aplikacji:** Projekt używa App Routera. Cały kod związany z routingiem znajduje się w katalogu `/app`.
+- **Modularność:** Twórz małe, reużywalne komponenty. Unikaj plików przekraczających 300-400 linii kodu.
+- **Czystość kodu:** Pisz kod samoopisujący się. Unikaj niepotrzebnych komentarzy, chyba że logika jest bardzo skomplikowana. Zmienne i funkcje nazywaj po angielsku, używając `camelCase`, a komponenty `PascalCase`.
+
+## 2. Next.js 16
+
+- **App Router:** Używaj wyłącznie paradygmatu App Router. Nie korzystaj z katalogu `/pages`.
+- **React Server Components (RSC):** Domyślnie wszystkie komponenty to Server Components.
+- **Client Components:** Używaj dyrektywy `"use client"` na samej górze pliku **tylko wtedy**, gdy komponent wymaga:
+  - Interaktywności (np. `onClick`, `onChange`).
+  - Użycia hooków stanowych (np. `useState`, `useEffect`, `useReducer`).
+  - Korzystania z obiektów specyficznych dla przeglądarki (np. `window`, `document`).
+- **Przekazywanie propsów:** Upewnij się, że propsy przekazywane z Server Components do Client Components są serializowalne.
+- **Mutacje danych:** Preferuj Server Actions (`"use server"`) do obsługi formularzy i mutacji danych zamiast tworzenia osobnych endpointów API, chyba że API musi być dostępne publicznie.
+- **Optymalizacja:** Zawsze korzystaj z wbudowanych komponentów: `<Image />` dla obrazów i `<Link />` dla nawigacji.
+
+## 3. TypeScript
+
+- **Zasada ogólna:** Cały nowy kod musi być pisany w TypeScript.
+- **Ścisłe typowanie:** Stosuj ścisłe typowanie. Bezwzględnie unikaj typu `any`. Jeśli typ jest nieznany w fazie pisania, użyj `unknown` i odpowiednio go zawęź (type narrowing).
+- **Interfejsy vs Typy:** Preferuj używanie `interface` do definiowania kształtu obiektów i propsów, a `type` do unii, przecięć (intersections) i typów prostych.
+- **Typy globalne:** Globalne definicje typów i interfejsów umieszczaj w `/types/types.ts` (lub odpowiednich plikach w katalogu `/types`).
+- **Walidacja danych:** Do walidacji danych zewnętrznych (np. payloady API, formularze) używaj biblioteki Zod, aby zapewnić bezpieczeństwo typów w czasie rzeczywistym.
+
+## 4. Tailwind CSS
+
+- **Stylizowanie:** Używaj wyłącznie klas narzędziowych (utility classes) Tailwind CSS. Unikaj tworzenia niestandardowych plików `.css` lub `.scss`, z wyjątkiem niezbędnych zmiennych CSS w `globals.css`.
+- **Mobile-first:** Stosuj podejście mobile-first. Domyślne klasy dotyczą najmniejszych ekranów, używaj prefiksów `sm:`, `md:`, `lg:`, `xl:` dla większych rozdzielczości.
+- **Funkcja cn():** Do łączenia klas w sposób warunkowy zawsze używaj funkcji `cn()` (zazwyczaj znajdującej się w `/lib/utils.ts`), która jest połączeniem `clsx` i `tailwind-merge`. Pozwala to na unikanie konfliktów klas Tailwinda.
+
+## 5. shadcn/ui
+
+- **Filozofia:** Pamiętaj, że shadcn/ui nie jest tradycyjną biblioteką npm. Komponenty są kopiowane bezpośrednio do projektu (zazwyczaj do `/components/ui`).
+- **Modyfikacja:** Możesz i powinieneś modyfikować skopiowane komponenty ui, jeśli wymagają tego potrzeby projektowe (np. zmiana domyślnego wariantu przycisku).
+- **Zależności:** Większość komponentów bazuje na Radix UI. Dbaj o zachowanie dostępności (a11y), w tym pełnej obsługi z klawiatury i poprawnych atrybutów ARIA.
+- **Komponowanie:** Używaj komponentów z `/components/ui` jako bloków budulcowych dla bardziej złożonych komponentów w `/components`.
+
+## 6. Organizacja plików i importów
+
+- **Struktura katalogów (przykładowa):**
+  - `/app` - routing, strony, layouty, server actions.
+  - `/components/ui` - komponenty z shadcn/ui.
+  - `/components/icons` - ikony SVG jako komponenty React (`.tsx`). Używaj `currentColor` + klasy Tailwind do stylizacji kolorów i rozmiarów. Eksportuj wszystkie ikony z `index.ts` (barrel export).
+  - `/components` - reużywalne komponenty specyficzne dla domeny.
+  - `/lib` - funkcje pomocnicze, konfiguracje zewnętrznych bibliotek (np. `utils.ts`, `db.ts`).
+  - `/lib/validations` - schematy Zod (reużywane front + Server Actions).
+  - `/lib/stores` - store'y Zustand.
+  - `/hooks` - customowe hooki React współdzielone między trasami.
+  - `/types` - globalne deklaracje typów.
+  - `/public/images` - statyczne obrazy rastrowe (WebP, AVIF, PNG, JPG). Używaj z `<Image src="/images/..." />`.
+  - `/public/icons` - statyczne pliki SVG niewymagające stylizacji (favicon, logo w meta tagach). Używaj z `<Image src="/icons/..." />`.
+- **Co-location pod trasą (prefix `_`):** Pliki specyficzne wyłącznie dla danej trasy (np. komponenty sekcji formularza, hooki nawigacji kroków) umieszczaj w podfolderach z prefixem `_` bezpośrednio pod trasą App Routera (np. `app/formularz/_components/`, `app/formularz/_hooks/`). Prefix `_` wyklucza folder z routingu Next.js. Pliki reużywalne globalnie (schematy Zod, store'y Zustand, utility) trzymaj w `/lib`, `/hooks` lub `/components`.
+- **Kolejność importów:**
+  1. React / Next.js
+  2. Zewnętrzne biblioteki (npm)
+  3. Absolutne importy wewnętrzne (np. `@/components/...`, `@/lib/...`)
+  4. Relatywne importy lokalne.

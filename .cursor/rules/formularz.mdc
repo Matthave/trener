@@ -1,0 +1,259 @@
+---
+description: Zasady implementacji wieloetapowego formularza na stronie /formularz w Next.js
+globs: ["app/formularz/**/*"]
+alwaysApply: true
+---
+
+# Formularz wieloetapowy — reguły implementacji
+
+## Kontekst projektu
+Strona wykonana w minimalistycznym, eleganckim stylu z dużym fontem i dużą ilością negatywnej przestrzeni. Formularz zbiera dane dotyczące diety, treningu, zdrowia i snu od klientów indywidualnych (różne grupy wiekowe, niekoniecznie tech-savvy). Priorytet: prostota UX, czystość ekranu, spójność z estetyką strony.
+
+---
+
+## 1. Struktura plików
+
+```
+app/
+  formularz/
+    page.tsx                  # Główny widok — zarządza aktualnym krokiem
+    layout.tsx                # Pasek progresu + przycisk Wstecz
+    _components/
+      ProgressBar.tsx         # Dwupoziomowy pasek progresu (sekcja + krok)
+      StepWrapper.tsx         # Framer Motion — animacja wejścia/wyjścia między krokami
+      sections/
+        AnkietaStartowa.tsx
+        WywiadZywieniowy.tsx
+        WywiadTreningowy.tsx
+        Zdrowie.tsx
+        Sen.tsx
+    _hooks/
+      useMultiStepForm.ts     # Logika nawigacji kroków (next, back, goToStep)
+    actions/
+      sendForm.ts             # Server Action — wysyłka przez Resend
+
+lib/
+  validations/
+    formularz/
+      ankieta.schema.ts       # Zod schema per sekcja
+      zywienie.schema.ts
+      treningowy.schema.ts
+      zdrowie.schema.ts
+      sen.schema.ts
+  stores/
+    formularz-store.ts        # Zustand store z persist — draft formularza + nawigacja
+```
+
+Schematy Zod znajdują się w `/lib/validations/formularz/`, a nie co-located pod trasą. Dzięki temu mogą być reużywane zarówno przez komponenty klienckie (resolver RHF), jak i Server Actions do podwójnej walidacji (patrz `forms-and-state.mdc`).
+
+Hooki i komponenty specyficzne dla formularza pozostają co-located pod trasą (`_hooks/`, `_components/`) — prefix `_` wyklucza je z routingu Next.js App Router (patrz `structure.mdc`).
+
+---
+
+## 2. Podział na widoki — model hybrydowy
+
+- Każda sekcja jest podzielona na pod-kroki po **3–4 pytania na ekran**.
+- Ekran musi pozostać czysty — duży font + negatywna przestrzeń = mało elementów jednocześnie.
+- Szacowana liczba widoków:
+
+| Sekcja               | Pytań | Widoków |
+|----------------------|-------|---------|
+| Ankieta startowa     | ~4    | 1–2     |
+| Wywiad żywieniowy    | ~7    | 2       |
+| Wywiad treningowy    | ~5    | 2       |
+| Zdrowie              | ~12   | 3–4     |
+| Sen (opcjonalnie)    | ~16   | 4–5     |
+| **Łącznie**          | ~44   | ~12–15  |
+
+---
+
+## 3. Pasek progresu — dwa poziomy
+
+- **Poziom 1 (główny, widoczny):** która sekcja z 5 (lub 4, jeśli pominięto Sen).
+- **Poziom 2 (subtelny):** który pod-krok wewnątrz bieżącej sekcji.
+- Etykieta nad paskiem zawsze pokazuje nazwę aktualnej sekcji, np. `Sekcja 2/5: Wywiad żywieniowy`.
+- Pasek dynamicznie dostosowuje liczbę sekcji w zależności od deklaracji użytkownika dot. sekcji Sen.
+
+```tsx
+// Przykładowy interfejs komponentu
+<ProgressBar
+  currentSection={2}
+  totalSections={hasSleep ? 5 : 4}
+  currentStep={1}
+  totalStepsInSection={2}
+  sectionLabel="Wywiad żywieniowy"
+/>
+```
+
+---
+
+## 4. Sekcja „Sen" — deklaracja na ekranie powitalnym
+
+- Przed pierwszym pytaniem formularza wyświetl **ekran powitalny** z jednym pytaniem:
+  > *„Czy chcesz uzupełnić dodatkową sekcję dotyczącą snu? (opcjonalne)"*
+  - ☐ Tak, chcę wypełnić sekcję o śnie
+  - ☐ Nie, pominę tę sekcję
+- Odpowiedź zapisywana jest do stanu jako `includeSleep: boolean`.
+- Na podstawie `includeSleep` dynamicznie generowana jest tablica kroków (`steps[]`) — z sekcją Sen lub bez.
+- Pasek progresu reaguje na tę wartość.
+
+---
+
+## 5. Walidacja i wymagane pola
+
+- **Tylko sekcja „Ankieta startowa" zawiera pola wymagane** (m.in. Imię, Nazwisko, E-mail, Telefon, Wzrost, Waga).
+- Pozostałe sekcje są opcjonalne — brak walidacji blokującej przejście do następnego kroku.
+- Walidacja realizowana przez **Zod** — osobny schemat per sekcja.
+- Integracja z **React Hook Form** przez `zodResolver`.
+
+```ts
+// lib/validations/formularz/ankieta.schema.ts
+import { z } from "zod"
+
+export const ankietaSchema = z.object({
+  imie: z.string().min(1, "Imię jest wymagane"),
+  nazwisko: z.string().min(1, "Nazwisko jest wymagane"),
+  email: z.string().email("Nieprawidłowy adres e-mail"),
+  telefon: z.string().min(9, "Podaj prawidłowy numer telefonu"),
+  wzrost: z.number({ required_error: "Wzrost jest wymagany" }).positive(),
+  waga: z.number({ required_error: "Waga jest wymagana" }).positive(),
+})
+
+export type AnkietaData = z.infer<typeof ankietaSchema>
+```
+
+---
+
+## 6. Stan formularza — Zustand + persist
+
+Stan formularza wieloetapowego zarządzany jest przez **Zustand** z middleware `persist` (zapis do `localStorage`). Store znajduje się w `/lib/stores/formularz-store.ts`.
+
+### Zakres store'a Zustand
+
+Zustand **nie** przechowuje wartości każdego inputa (od tego jest RHF). Store trzyma wyłącznie:
+- `currentStep` — aktualny globalny krok formularza.
+- `includeSleep` — czy użytkownik zdecydował się wypełnić sekcję o śnie.
+- `formData` — zebrane dane ze wszystkich sekcji (aktualizowane przy `onNext`).
+- `isStarted` — czy formularz został rozpoczęty (do logiki kontynuacji).
+
+### Persystencja i kontynuacja
+
+- Middleware `persist` automatycznie zapisuje stan do `localStorage` pod kluczem `formularz_draft`.
+- Przy wejściu na `/formularz` sprawdzaj, czy istnieje zapisany stan (`isStarted === true`):
+  - Jeśli istnieje → pytaj użytkownika:
+    > *„Mamy zapisany poprzedni postęp. Chcesz kontynuować?"*
+    - [Kontynuuj] → wczytaj stan i przejdź do zapisanego kroku
+    - [Zacznij od nowa] → wywołaj `resetStore()` (czyści stan i localStorage)
+- Po pomyślnym wysłaniu formularza → wywołaj `resetStore()`.
+- Używaj **selektorów** do odczytu stanu (patrz `forms-and-state.mdc`).
+
+### Ostrzeżenie przy opuszczaniu strony
+
+- Użyj `beforeunload` (natywny dialog przeglądarki) ORAZ nasłuchiwania `popstate` (App Router) dla przycisku Wstecz w przeglądarce.
+
+```ts
+// lib/stores/formularz-store.ts
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
+
+interface FormularzState {
+  currentStep: number
+  includeSleep: boolean
+  isStarted: boolean
+  formData: Record<string, unknown>
+  setStep: (step: number) => void
+  nextStep: () => void
+  prevStep: () => void
+  setIncludeSleep: (value: boolean) => void
+  updateFormData: (section: string, data: Record<string, unknown>) => void
+  resetStore: () => void
+}
+
+const initialState = {
+  currentStep: 0,
+  includeSleep: false,
+  isStarted: false,
+  formData: {},
+}
+
+export const useFormularzStore = create<FormularzState>()(
+  persist(
+    (set) => ({
+      ...initialState,
+      setStep: (step) => set({ currentStep: step, isStarted: true }),
+      nextStep: () => set((s) => ({ currentStep: s.currentStep + 1, isStarted: true })),
+      prevStep: () => set((s) => ({ currentStep: Math.max(0, s.currentStep - 1) })),
+      setIncludeSleep: (value) => set({ includeSleep: value }),
+      updateFormData: (section, data) =>
+        set((s) => ({ formData: { ...s.formData, [section]: data }, isStarted: true })),
+      resetStore: () => set(initialState),
+    }),
+    { name: "formularz_draft" }
+  )
+)
+```
+
+---
+
+## 7. Stack techniczny
+
+| Warstwa            | Narzędzie            | Uwagi                                              |
+|--------------------|----------------------|----------------------------------------------------|
+| Stan formularza    | React Hook Form      | Wydajny, minimalna re-renderyzacja                 |
+| Walidacja          | Zod                  | Schemat per sekcja, pełne TypeScript types         |
+| Stan globalny      | Zustand + persist    | Draft formularza, nawigacja kroków, zapis do localStorage |
+| Animacje przejść   | Framer Motion        | Slide między krokami, spójne z eleganckim designem |
+| Wysyłka e-mail     | Resend               | Server Action, React Email do szablonu             |
+| Upload plików      | next-cloudinary      | Drag & drop, linki do plików w e-mailu do admina   |
+| Komponenty Form    | shadcn/ui Form       | Wrappery a11y dla RHF, custom stylizacja Tailwind  |
+
+---
+
+## 8. Budowa pól formularza
+
+### Komponenty strukturalne
+
+Do budowy pól używaj komponentów `<Form />`, `<FormField />`, `<FormItem />`, `<FormControl />`, `<FormMessage />` z shadcn/ui (patrz `forms-and-state.mdc`). Zapewniają one automatyczną integrację z RHF, poprawną dostępność (a11y: label → input, aria-describedby, aria-invalid) i spójny wyświetlacz błędów walidacji.
+
+Wizualna stylizacja pól pozostaje w pełni customowa (klasy Tailwind) — komponenty shadcn/ui Form są wrapperami strukturalnymi i nie narzucają wyglądu.
+
+### Dozwolone typy inputów
+
+- `text` — pola jednoliniowe (imię, nazwisko, e-mail, telefon itp.)
+- `textarea` — dłuższe odpowiedzi opisowe
+- `checkbox` — wybór opcji (pojedynczy lub wielokrotny)
+
+Nie wprowadzaj innych typów pól bez osobnego uzgodnienia.
+
+---
+
+## 9. Nawigacja i UX
+
+- Przejście do następnego kroku: przycisk **„Dalej"**.
+- Powrót do poprzedniego kroku: przycisk **„Wstecz"** (zawsze dostępny, z wyjątkiem ekranu powitalnego).
+- Użytkownik może swobodnie cofać się do już uzupełnionych kroków.
+- Nie blokuj przycisku „Dalej" w sekcjach opcjonalnych.
+- Na ostatnim kroku przycisk „Dalej" zastępuje **„Wyślij formularz"**.
+
+---
+
+## 10. Wysyłka — Server Action
+
+- Wysyłka przez **Resend** przy użyciu Next.js Server Action (`actions/sendForm.ts`).
+- Szablon e-maila tworzony w **React Email**.
+- Po pomyślnej wysyłce:
+  1. Wywołaj `resetStore()` z Zustand (czyści stan i localStorage).
+  2. Wyświetl ekran potwierdzenia (nie przekierowuj — zostań na `/formularz`).
+  3. Pokaż komunikat sukcesu z krótkim podsumowaniem (np. imię, e-mail).
+
+---
+
+## 11. Upload plików — Cloudinary
+
+Formularz umożliwia upload plików (np. zdjęcia sylwetki) w wybranych krokach. Do obsługi uploadu używaj `next-cloudinary` (już zainstalowany).
+
+- **Komponent uploadu:** Umieść w `app/formularz/_components/FileUpload.tsx`. Wspieraj drag & drop oraz kliknięcie do wyboru pliku.
+- **Dozwolone formaty:** obrazy (JPEG, PNG, WebP), max 10 MB per plik.
+- **Przechowywanie URL-i:** Po pomyślnym uploadzie zapisuj URL Cloudinary do `formData` w Zustand store (klucz odpowiadający sekcji/polu).
+- **Usuwanie:** Użytkownik może usunąć przesłany plik przed wysłaniem formularza.
+- **E-mail do admina:** W Server Action `sendForm.ts` dołączaj linki Cloudinary do przesłanych plików (nie załączniki binarne).

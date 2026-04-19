@@ -1,0 +1,29 @@
+---
+description: Zasady tworzenia logiki backendowej i Server Actions w Next.js
+globs: **/*.{ts,tsx}
+---
+
+# Logika Backendowa i Server Actions (Next.js 16)
+
+Jesteś ekspertem Next.js. W tym projekcie cała logika backendowa, mutacje danych i obsługa formularzy opierają się na Server Actions. Stosuj poniższe zasady rygorystycznie.
+
+## 1. Architektura i Lokalizacja
+
+- **Katalogi:** Umieszczaj pliki z Server Actions w dedykowanym katalogu, np. `/actions` w głównym drzewie projektu (lub `/app/actions`).
+- **Nazewnictwo:** Pliki nazywaj zgodnie z ich domeną, np. `user-actions.ts`, `form-actions.ts`.
+- **Dyrektywa:** Każdy plik z akcjami serwerowymi musi zaczynać się od dyrektywy `"use server";` na samej górze.
+
+## 2. Walidacja Danych (Zod)
+
+- **Zasada absolutna:** Zawsze waliduj dane wejściowe w Server Actions za pomocą biblioteki Zod. Nigdy nie ufaj danym przychodzącym od klienta.
+- **Bezpieczne parsowanie:** Używaj metody `schema.safeParse()`, a nie `parse()`, aby uniknąć rzucania niekontrolowanych wyjątków i móc bezpiecznie obsłużyć błędy walidacji.
+
+## 3. Standaryzacja Odpowiedzi
+
+- Wszystkie Server Actions muszą zwracać przewidywalny obiekt odpowiedzi. Zastosuj następujący wzorzec (lub podobny zdefiniowany w typach globalnych):
+  ```typescript
+  type ActionResponse<T> =
+    | { success: true; data: T }
+    | { success: false; error: string; fieldErrors?: Record<string, string[]> };
+  ```
+- **Zwracanie błędów Zod:** W przypadku błędu walidacji (safeParse zwróci success: false), przemapuj error.flatten().fieldErrors i zwróć je do klienta.

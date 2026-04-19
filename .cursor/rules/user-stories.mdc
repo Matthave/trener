@@ -1,0 +1,257 @@
+---
+description: Pełne historyjki użytkowników (US-001 – US-026) z kryteriami akceptacji dla MVP trenera personalnego. Używaj przy implementacji konkretnych funkcjonalności.
+alwaysApply: false
+---
+
+# Historyjki użytkowników — Trener Personalny
+
+## US-001: Przeglądanie strony głównej
+Jako potencjalny podopieczny chcę zobaczyć profesjonalną stronę-wizytówkę trenera, aby ocenić jego ofertę i podejście do treningu.
+
+Kryteria akceptacji:
+- Strona główna ładuje się poprawnie na desktopie, tablecie i urządzeniu mobilnym.
+- Treść prezentuje ofertę trenera z naciskiem na kompleksowe podejście (trening, dieta, suplementacja, sen/regeneracja).
+- Design zgodny z założeniami: Michroma/Inter, #111/#C6C6C6/#00A19C, minimalistyczny układ z dużą ilością negatywnej przestrzeni.
+- Minimalne użycie zdjęć — dominuje typografia i kompozycja.
+- Animacje Framer Motion działają płynnie i nie blokują interakcji.
+
+## US-002: Nawigacja po stronie
+Jako użytkownik chcę korzystać z przejrzystej nawigacji, aby łatwo przemieszczać się między sekcjami strony.
+
+Kryteria akceptacji:
+- Nawigacja widoczna na każdej podstronie.
+- Na mobile: menu hamburgerowe lub inny responsywny wzorzec.
+- Linki do: strona główna, formularz kontaktowy, formularz startowy, logowanie.
+- Po zalogowaniu: link do profilu + opcja wylogowania.
+- Aktywna podstrona wizualnie wyróżniona.
+
+## US-003: Wysłanie formularza kontaktowego
+Jako potencjalny klient chcę szybko skontaktować się z trenerem, aby zadać pytanie lub umówić się na konsultację.
+
+Kryteria akceptacji:
+- Pola: imię, e-mail, temat, treść wiadomości (wszystkie wymagane).
+- Walidacja formatu e-mail.
+- Po wysłaniu: komunikat potwierdzający.
+- Wiadomość trafia na e-mail admina (Resend).
+- Przy błędzie: czytelny komunikat.
+
+## US-004: Walidacja formularza kontaktowego
+Jako użytkownik chcę otrzymywać czytelne komunikaty o błędach, abym mógł poprawić dane przed wysłaniem.
+
+Kryteria akceptacji:
+- Pusty formularz → komunikaty walidacyjne przy każdym polu.
+- Niepoprawny e-mail → komunikat błędu.
+- Komunikaty znikają po poprawnym wypełnieniu.
+- Walidacja Zod: klient + serwer.
+
+## US-005: Rozpoczęcie formularza startowego
+Jako potencjalny podopieczny chcę rozpocząć formularz startowy, aby przekazać trenerowi informacje o sobie.
+
+Kryteria akceptacji:
+- Dostępny z nawigacji i strony głównej.
+- Pierwsza sekcja ładuje się poprawnie.
+- Pasek postępu wskazuje etap (np. 1/15).
+- Widoczny tytuł i opis sekcji.
+- Dostępny dla zalogowanych i niezalogowanych.
+
+## US-006: Nawigacja między sekcjami formularza startowego
+Jako użytkownik chcę przechodzić między sekcjami, aby wrócić do wcześniejszych odpowiedzi.
+
+Kryteria akceptacji:
+- "Dalej" → następna sekcja po walidacji bieżącej.
+- "Wstecz" → poprzednia sekcja bez utraty danych.
+- Pasek postępu aktualizuje się.
+- Dane z poprzednich sekcji zachowane.
+
+## US-007: Automatyczny zapis postępu formularza
+Jako użytkownik chcę, aby postęp zapisywał się automatycznie, abym mógł kontynuować po przerwie.
+
+Kryteria akceptacji:
+- Zapis w localStorage (Zustand persist).
+- Dane odtwarzane po ponownym otwarciu.
+- Pasek postępu wskazuje ostatnią sekcję.
+- Subtelny komunikat o odtworzeniu stanu.
+
+## US-008: Upload plików w formularzu startowym
+Jako użytkownik chcę załączyć pliki (badania, zdjęcia sylwetki), aby trener lepiej ocenił mój stan.
+
+Kryteria akceptacji:
+- Akceptowane formaty: PDF, DOC/DOCX, JPG/JPEG/PNG.
+- Drag & drop + tradycyjny wybór pliku.
+- Pliki trafiają do Cloudinary.
+- Podgląd/nazwa przesłanego pliku.
+- Wskaźnik postępu uploadu.
+- Niedozwolony rozmiar/format → czytelny komunikat.
+
+## US-009: Wysłanie formularza jako gość
+Jako niezalogowany użytkownik chcę wysłać formularz bez zakładania konta.
+
+Kryteria akceptacji:
+- Przycisk "Wyślij jako Gość" (szary) na ostatniej stronie.
+- Wysyłka bez hasła.
+- System ignoruje czy e-mail istnieje w bazie.
+- Ekran podziękowania po wysłaniu.
+- E-mail z podziękowaniem do użytkownika (Resend).
+- E-mail do admina: powiadomienie + PDF + linki Cloudinary.
+
+## US-010: Wysłanie formularza z założeniem konta
+Jako nowy użytkownik chcę wysłać formularz i założyć konto jednocześnie.
+
+Kryteria akceptacji:
+- Przycisk "Załóż konto i wyślij" (#00A19C) na ostatniej stronie.
+- Dodatkowe pole na hasło (+ potwierdzenie).
+- Walidacja hasła (min. długość).
+- Formularz wysłany + konto utworzone.
+- Ekran podziękowania z info o koncie.
+- E-mail do użytkownika + e-mail do admina (PDF + linki).
+
+## US-011: Walidacja formularza startowego
+Jako użytkownik chcę wiedzieć o brakujących/niepoprawnych odpowiedziach.
+
+Kryteria akceptacji:
+- Walidacja na poziomie sekcji (przy przejściu dalej).
+- Wymagane pola oznaczone wizualnie.
+- Komunikaty przy odpowiednich polach.
+- Walidacja finalna Zod: klient + serwer.
+- Niepoprawne dane blokują przejście/wysyłkę.
+
+## US-012: Rejestracja konta (niezależna od formularza)
+Jako nowy użytkownik chcę założyć konto, aby mieć dostęp do profilu.
+
+Kryteria akceptacji:
+- Strona rejestracji dostępna z nawigacji.
+- Pola: e-mail, hasło, potwierdzenie hasła.
+- Walidacja: format e-mail, hasło min. 8 znaków, zgodność haseł.
+- Po rejestracji: auto-logowanie + przekierowanie na profil.
+- Istniejący e-mail → komunikat błędu.
+- Hasło hashowane.
+
+## US-013: Logowanie
+Jako zarejestrowany użytkownik chcę zalogować się na konto.
+
+Kryteria akceptacji:
+- Strona logowania dostępna z nawigacji.
+- Pola: e-mail, hasło (oba wymagane).
+- Po zalogowaniu: przekierowanie na profil/stronę główną.
+- Błędne dane → komunikat bez ujawniania, które pole niepoprawne.
+- Sesja utrzymywana.
+
+## US-014: Wylogowanie
+Jako zalogowany użytkownik chcę się wylogować.
+
+Kryteria akceptacji:
+- Opcja wylogowania w nawigacji (dla zalogowanych).
+- Sesja niszczona po kliknięciu.
+- Przekierowanie na stronę główną.
+- Chronione trasy niedostępne po wylogowaniu.
+
+## US-015: Profil użytkownika
+Jako zalogowany użytkownik chcę zobaczyć swoje dane.
+
+Kryteria akceptacji:
+- Dostępny tylko po zalogowaniu.
+- Wyświetla: imię, e-mail, datę rejestracji.
+- Tryb tylko do odczytu (MVP).
+- Bez logowania → przekierowanie na logowanie.
+
+## US-016: Ochrona tras (autoryzacja)
+Jako system chcę chronić trasy wymagające zalogowania.
+
+Kryteria akceptacji:
+- Profil wymaga aktywnej sesji.
+- Brak sesji → przekierowanie na logowanie.
+- Po zalogowaniu → powrót na żądaną trasę.
+- Wygasła sesja → przekierowanie.
+
+## US-017: Generowanie PDF
+Jako administrator chcę podsumowanie odpowiedzi w PDF.
+
+Kryteria akceptacji:
+- PDF generowany po wysłaniu (gość i konto) przez @react-pdf/renderer.
+- Odpowiedzi uporządkowane sekcjami.
+- Dane kontaktowe (imię, e-mail).
+- Linki do plików w Cloudinary.
+- PDF dołączony do e-maila admina.
+
+## US-018: Powiadomienia e-mail dla admina
+Jako administrator chcę e-mail o nowych zgłoszeniach.
+
+Kryteria akceptacji:
+- E-mail po każdym formularzu startowym (Resend).
+- Info: imię, e-mail, data.
+- Załączony PDF + linki Cloudinary.
+- Formularz kontaktowy → e-mail z treścią wiadomości.
+
+## US-019: E-mail potwierdzający dla użytkownika
+Jako użytkownik chcę potwierdzenie, że zgłoszenie dotarło.
+
+Kryteria akceptacji:
+- E-mail po wysłaniu formularza (gość i konto).
+- Podziękowanie + info o dalszych krokach.
+- Wysyłany na adres z formularza (Resend).
+
+## US-020: Responsywność (mobile)
+Jako użytkownik mobilny chcę wygodnie korzystać ze strony.
+
+Kryteria akceptacji:
+- Poprawne wyświetlanie od 320px.
+- Touch targets min. 44x44px.
+- Nawigacja funkcjonalna na mobile.
+- Formularze w pełni użyteczne na mobile.
+- Typografia skalowana do ekranu.
+
+## US-021: Obsługa błędów sieciowych
+Jako użytkownik chcę wiedzieć o problemach z połączeniem.
+
+Kryteria akceptacji:
+- Błąd sieciowy → komunikat o błędzie.
+- Formularz startowy: dane w localStorage zachowane.
+- Możliwość ponowienia próby.
+- Komunikaty czytelne.
+
+## US-022: Ekran podziękowania
+Jako użytkownik chcę potwierdzenie przyjęcia zgłoszenia.
+
+Kryteria akceptacji:
+- Dedykowany ekran po udanym wysłaniu.
+- Info o pomyślnym wysłaniu + czego się spodziewać.
+- Jeśli konto → info o utworzeniu konta.
+- localStorage czyszczony po wysłaniu.
+
+## US-023: Bezpieczeństwo sesji
+Jako użytkownik chcę, aby moje dane były bezpieczne.
+
+Kryteria akceptacji:
+- Hasła hashowane (bcrypt/argon2).
+- Sesja wygasa po czasie nieaktywności.
+- httpOnly, secure cookies.
+- Rate limiting na logowaniu.
+- Brak danych wrażliwych w localStorage/logach.
+
+## US-024: Upload wielu plików
+Jako użytkownik chcę przesłać kilka plików naraz.
+
+Kryteria akceptacji:
+- Multi-file upload w jednym polu.
+- Lista plików z nazwami i rozmiarami.
+- Usuwanie pojedynczych plików przed wysłaniem.
+- Niezależny upload do Cloudinary.
+- Błąd jednego pliku nie blokuje reszty.
+
+## US-025: Dostępność (a11y)
+Jako użytkownik z ograniczeniami chcę korzystać ze strony w pełni.
+
+Kryteria akceptacji:
+- Poprawne label/aria-label na formularzach.
+- Kontrast WCAG AA (#C6C6C6 na #111).
+- Nawigacja klawiaturą (Tab, Enter, Escape).
+- aria-required, aria-invalid na polach.
+- aria-describedby łączące komunikaty z polami.
+
+## US-026: Wydajność
+Jako użytkownik chcę szybko ładującą się stronę.
+
+Kryteria akceptacji:
+- FCP < 1.5s (4G), LCP < 2.5s, CLS < 0.1.
+- Optymalizacje Next.js (SSR/SSG, code splitting, lazy loading).
+- Fonty: font-display: swap, preload.

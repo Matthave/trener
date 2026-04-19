@@ -1,0 +1,35 @@
+---
+description: Zasady obsługi formularzy (RHF + Zod) i zarządzania stanem globalnym (Zustand)
+globs: **/*.{ts,tsx}
+---
+
+# Formularze i Zarządzanie Stanem (RHF, Zod, Zustand)
+
+W projekcie znajdują się obszerne formularze (np. rozbudowany wywiad trenerski). Aplikacja używa React Hook Form (RHF) z Zod do lokalnego stanu formularzy oraz Zustand do stanu globalnego.
+
+## 1. React Hook Form i Zod (Formularze)
+
+- **Komponenty shadcn/ui:** Do budowy formularzy używaj wyłącznie komponentów `<Form />`, `<FormField />`, `<FormItem />` z `shadcn/ui`, które automatycznie integrują RHF i obsługują dostępność (a11y).
+- **Schematy Walidacji:** Trzymaj schematy Zod w osobnym katalogu (np. `/lib/validations/`). Pozwala to na ich reużywanie zarówno w formularzach na froncie (resolver RHF), jak i w Server Actions do podwójnej walidacji.
+- **Domyślne wartości:** Zawsze definiuj `defaultValues` w hooku `useForm`, aby uniknąć problemów z niekontrolowanymi komponentami w React.
+
+## 2. Obsługa dużych formularzy (Multi-step)
+
+- **Podział:** Duży formularz wywiadu trenerskiego dziel na mniejsze kroki (komponenty).
+- **Walidacja kroków:** Używaj metody `trigger()` z RHF, aby zwalidować bieżący krok przed pozwoleniem użytkownikowi na przejście do kolejnego.
+
+## 3. Zustand (Stan Globalny)
+
+- **Rozdział odpowiedzialności:** Zustand NIE SŁUŻY do trzymania stanu każdego inputa (od tego jest RHF). Używaj Zustand **tylko** do stanu, który musi być współdzielony między odseparowanymi komponentami, np.:
+  - Aktualny krok wieloetapowego formularza (`currentStep`).
+  - Ogólny stan UI (otwarte modale, globalne notyfikacje).
+  - Tymczasowo zapisane, częściowe dane (draft), zanim zostaną wysłane na serwer.
+- **Selektywne renderowanie:** Wymuszaj użycie selektorów przy pobieraniu stanu z Zustand, aby zminimalizować niepotrzebne re-rendery:
+  ```tsx
+  // DOBRZE:
+  const currentStep = useFormStore((state) => state.currentStep);
+  // ŹLE:
+  const { currentStep } = useFormStore();
+  ```
+
+  - **Wzorzec Slices**: Jeśli store w Zustand zacznie rosnąć (powyżej 100 linii), podziel go na tzw. Slices (np. createFormSlice, createUISlice).
