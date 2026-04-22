@@ -29,6 +29,11 @@ function ProgramRow({
     program.bundlePanels && program.bundlePanels.length > 0
       ? program.bundlePanels
       : [{ heading: "", sections: program.sections }];
+  const tileDescription = program.hideDescription
+    ? `Pakiet łączony w cenie ${program.price}${
+        program.savingsNote ? `, ${program.savingsNote.toLowerCase()}` : ""
+      }.`
+    : program.description;
 
   return (
     <SlideUp delay={0.1 * (index + 1)} triggerOnScroll>
@@ -52,18 +57,17 @@ function ProgramRow({
           aria-controls={panelId}
           onClick={onToggle}
           className={cn(
-            "relative w-full cursor-pointer bg-transparent px-6 py-6 text-left transition-colors sm:px-8 sm:py-8 lg:px-10 lg:py-10",
-            !isOpen && "group/pkg",
+            "group/pkg relative w-full cursor-pointer bg-transparent px-6 py-6 text-left transition-colors duration-200 ease-out sm:px-8 sm:py-8 lg:px-10 lg:py-10",
             "min-h-[7.5rem] sm:min-h-[8.5rem]",
             !isOpen &&
               "lg:hover:bg-accent/[1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
             isOpen && "bg-foreground/[0.06] lg:hover:bg-foreground/[0.06]",
           )}
         >
-          <div className="flex min-h-[4.5rem] flex-col gap-4 sm:min-h-0 sm:flex-row sm:items-center sm:gap-6 lg:gap-10">
+          <div className="flex min-h-[4.5rem] flex-col gap-5">
             <span
               className={cn(
-                "font-heading text-xs tracking-[0.2em] text-accent transition-colors sm:text-sm",
+                "font-heading text-xs tracking-[0.2em] text-accent transition-colors duration-200 ease-out sm:text-sm",
                 !isOpen && "lg:group-hover/pkg:text-[#111]",
                 isOpen && "text-accent",
               )}
@@ -73,77 +77,63 @@ function ProgramRow({
 
             <div
               className={cn(
-                "flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:gap-6",
-                program.hideDescription && "sm:flex-1",
+                "flex min-w-0 items-center gap-4",
               )}
             >
-              <div className="flex min-w-0 flex-1 items-center gap-4">
-                <h3
-                  className={cn(
-                    "font-heading text-xl font-bold uppercase transition-colors sm:text-3xl lg:text-4xl xl:text-5xl",
-                    isOpen && "text-[#fff]",
-                    !isOpen && "text-foreground lg:group-hover/pkg:text-[#111]",
-                  )}
-                >
-                  {program.title}
-                </h3>
+              <h3
+                className={cn(
+                  "min-w-0 flex-1 font-heading text-xl font-bold uppercase transition-colors duration-200 ease-out sm:text-3xl lg:text-4xl xl:text-5xl",
+                  isOpen && "text-[#fff]",
+                  !isOpen && "text-foreground lg:group-hover/pkg:text-[#111]",
+                )}
+              >
+                {program.title}
+              </h3>
+              <span
+                aria-hidden
+                className={cn(
+                  "shrink-0 text-[20px] leading-none text-accent/70 transition-[opacity,transform,color] duration-200 ease-out",
+                  "opacity-70 lg:group-hover/pkg:translate-x-[3px] lg:group-hover/pkg:opacity-100",
+                  !isOpen && "lg:group-hover/pkg:text-[#111]",
+                  isOpen && "opacity-100 text-accent",
+                )}
+              >
+                ›
+              </span>
+            </div>
 
+            <div className="flex flex-col gap-3">
+              <p
+                className={cn(
+                  "font-heading text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/90 transition-colors duration-200 ease-out sm:text-[11px]",
+                  !isOpen && "lg:group-hover/pkg:text-[#111]",
+                  isOpen && "text-foreground",
+                )}
+              >
+                {tileDescription}
+              </p>
+              <div className="flex items-center gap-3">
                 <span
                   aria-hidden
                   className={cn(
-                    "ml-auto shrink-0 font-heading text-[10px] uppercase tracking-[0.18em] transition-all duration-300 ease-out sm:ml-0",
-                    "pointer-events-none translate-x-2 opacity-0",
-                    "lg:group-hover/pkg:translate-x-0 lg:group-hover/pkg:opacity-100",
-                    isOpen && "translate-x-0 opacity-100",
-                    !isOpen && "text-accent lg:group-hover/pkg:text-[#111]",
-                    isOpen && "text-accent",
+                    "h-px flex-1 bg-gradient-to-r transition-opacity duration-200 ease-out",
+                    isOpen
+                      ? "from-accent to-transparent opacity-60"
+                      : "from-accent to-transparent opacity-35 lg:from-[#111] lg:group-hover/pkg:opacity-55",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "font-mono text-[10px] tracking-[0.2em] transition-[opacity,color] duration-200 ease-out lg:text-[11px]",
+                    isOpen
+                      ? "text-accent opacity-90"
+                      : "text-accent opacity-65 lg:text-[#111] lg:group-hover/pkg:opacity-85",
                   )}
                 >
-                  kliknij
+                  SZCZEGÓŁY
                 </span>
               </div>
             </div>
-
-            {!program.hideDescription || isOpen || program.discountBadge ? (
-              <div
-                className={cn(
-                  "flex flex-col items-end gap-1 font-heading transition-colors sm:ml-auto sm:max-w-xs sm:text-right lg:max-w-sm",
-                  isOpen
-                    ? "text-accent"
-                    : program.hideDescription && program.discountBadge
-                      ? "text-accent lg:group-hover/pkg:text-[#111]"
-                      : "text-[10px] uppercase leading-relaxed tracking-[0.12em] text-foreground/80 sm:text-[11px] lg:group-hover/pkg:text-[#111]",
-                )}
-              >
-                {isOpen ? (
-                  <>
-                    <p
-                      className={cn(
-                        "text-2xl font-bold tracking-tight transition-colors sm:text-3xl lg:text-4xl",
-                        program.savingsNote && "leading-tight",
-                      )}
-                    >
-                      {program.price}
-                    </p>
-                    {program.savingsNote ? (
-                      <p className="max-w-xs text-[10px] font-medium uppercase leading-snug tracking-[0.12em] text-foreground/65 sm:text-[11px]">
-                        {program.savingsNote}
-                      </p>
-                    ) : null}
-                  </>
-                ) : program.discountBadge && program.hideDescription ? (
-                  <p
-                    className={cn(
-                      "text-2xl font-bold tracking-tight transition-colors sm:text-3xl lg:text-4xl",
-                    )}
-                  >
-                    {program.discountBadge}
-                  </p>
-                ) : (
-                  <p className="whitespace-pre-line">{program.description}</p>
-                )}
-              </div>
-            ) : null}
           </div>
         </button>
 

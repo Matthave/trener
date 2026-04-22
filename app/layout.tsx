@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Michroma, Inter } from "next/font/google";
 import "./globals.css";
+import ParticlesMount from "@/components/ParticlesMount";
 
 const michroma = Michroma({
   weight: "400",
@@ -29,7 +30,12 @@ export default function RootLayout({
       <body
         className={`${michroma.variable} ${inter.variable} antialiased`}
       >
-        {children}
+        <div className="relative min-h-screen">
+          <ParticlesMount />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
