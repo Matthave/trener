@@ -41,7 +41,7 @@ export const particlesConfig: ISourceOptions = {
       type: "circle",
     },
     size: {
-      value: { min: 0.8, max: 2.5 },
+      value: { min: 0.8, max: 3.5 },
     },
   },
   interactivity: {

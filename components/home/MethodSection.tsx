@@ -85,7 +85,7 @@ export function MethodSection() {
               <span className="block">Proces</span>
             </h2>
 
-            <ul className="flex flex-col gap-3 font-heading text-[11px] uppercase tracking-[0.2em] text-foreground/50 sm:text-xs">
+            <ul className="flex flex-col gap-3 font-heading text-[11px] uppercase tracking-[0.2em] text-foreground/80 sm:text-xs">
               {steps.map((step, i) => (
                 <li key={i}>{`// 0${i + 1}. ${step}`}</li>
               ))}
@@ -94,20 +94,16 @@ export function MethodSection() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {tiles.map((tile, i) => (
-              <SlideUp
-                key={tile.id}
-                delay={0.15 * i}
-                triggerOnScroll
-              >
+              <SlideUp key={tile.id} delay={0.15 * i} triggerOnScroll>
                 {tile.type === "stat" ? (
-                  <div className="group min-w-[274px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 transition-colors lg:hover:border-foreground/20 sm:p-8">
+                  <div className="group min-w-[274px] rounded-lg border border-foreground/10 backdrop-blur-[2px] bg-foreground/[0.03] p-6 transition-colors lg:hover:border-foreground/20 sm:p-8">
                     <p className="font-heading text-[10px] uppercase tracking-[0.2em] text-accent sm:text-xs">
                       {tile.id} / {tile.label}
                     </p>
                     <p className="py-6 font-heading text-5xl font-normal text-foreground transition-colors lg:group-hover:text-accent sm:text-6xl">
                       {tile.value}
                     </p>
-                    <p className="font-heading text-[10px] uppercase tracking-[0.25em] text-foreground/50 sm:text-xs">
+                    <p className="font-heading text-[10px] uppercase tracking-[0.25em] text-foreground/70 sm:text-xs">
                       {tile.description}
                     </p>
                   </div>

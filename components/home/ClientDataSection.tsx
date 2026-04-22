@@ -95,7 +95,7 @@ export function ClientDataSection() {
               delay={0.05 * (i + 1)}
               triggerOnScroll
             >
-              <div className="relative overflow-hidden min-h-[236px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 sm:p-8">
+              <div className="relative overflow-hidden min-h-[236px] backdrop-blur-[2px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 sm:p-8">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-accent/15 sm:h-40 sm:w-40"

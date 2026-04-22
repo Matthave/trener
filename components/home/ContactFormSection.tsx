@@ -78,13 +78,13 @@ export function ContactFormSection() {
               Aplikuj
             </h2>
 
-            <p className="max-w-sm font-body text-sm leading-relaxed text-foreground/60 sm:text-base">
+            <p className="max-w-sm font-body text-sm leading-relaxed text-foreground/80 sm:text-base">
               Liczba miejsc jest ściśle ograniczona, aby zapewnić najwyższą
               jakość współpracy. Prześlij swoje dane, a skontaktuje się z Tobą w
               ciągu 24 godzin.
             </p>
 
-            <div className="flex items-center gap-3 font-heading text-[10px] uppercase tracking-[0.2em] text-foreground/50 sm:text-xs">
+            <div className="flex items-center gap-3 font-heading text-[10px] uppercase tracking-[0.2em] text-foreground/100 sm:text-xs">
               <Image
                 src="/icons/mail.svg"
                 alt=""

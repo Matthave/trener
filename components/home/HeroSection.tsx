@@ -33,7 +33,7 @@ export function HeroSection() {
     >
       <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
         <SlideUp delay={stepDelay(0)} triggerOnScroll>
-          <p className="font-heading text-[10px] uppercase tracking-[0.35em] text-foreground/60 sm:text-xs">
+          <p className="font-heading text-[10px] uppercase tracking-[0.35em] text-foreground/80 sm:text-xs">
             Trening * Dieta * Sen
           </p>
         </SlideUp>

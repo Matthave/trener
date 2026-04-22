@@ -39,8 +39,7 @@ function ProgramRow({
     <SlideUp delay={0.1 * (index + 1)} triggerOnScroll>
       <div
         className={cn(
-          "overflow-hidden rounded-lg border bg-foreground/[0.03] transition-[opacity,colors,border-color] duration-300",
-          isOpen && "border-accent",
+          "overflow-hidden rounded-lg border bg-foreground/[0.05] backdrop-blur-[2px] transition-[opacity,colors,border-color] duration-300",
           !isOpen &&
             program.accentBundle &&
             "border-accent/80 lg:hover:border-accent",
@@ -75,11 +74,7 @@ function ProgramRow({
               {program.id}
             </span>
 
-            <div
-              className={cn(
-                "flex min-w-0 items-center gap-4",
-              )}
-            >
+            <div className={cn("flex min-w-0 items-center gap-4")}>
               <h3
                 className={cn(
                   "min-w-0 flex-1 font-heading text-xl font-bold uppercase transition-colors duration-200 ease-out sm:text-3xl lg:text-4xl xl:text-5xl",
