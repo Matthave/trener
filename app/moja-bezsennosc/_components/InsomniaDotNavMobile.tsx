@@ -306,7 +306,7 @@ export function InsomniaDotNavMobile({
         aria-label="Nawigacja sekcji strony Moja bezsenność"
         aria-hidden={!isOpen}
         className={cn(
-          "fixed bottom-0 right-0 top-0 z-50 w-[min(76vw,390px)] border-l border-foreground/15 bg-background/95 bg-opacity-275 px-6 py-6 shadow-[-18px_0_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-transform duration-300 ease-out min-[1280px]:hidden",
+          "fixed bottom-0 right-0 top-0 z-50 w-[min(76vw,390px)] border-l border-foreground/15 bg-background/95 bg-opacity-90 px-6 py-6 shadow-[-18px_0_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-transform duration-300 ease-out min-[1280px]:hidden",
           isOpen ? "translate-x-0" : "pointer-events-none translate-x-full",
         )}
         style={{ visibility: isOpen ? "visible" : "hidden" }}
@@ -327,7 +327,7 @@ export function InsomniaDotNavMobile({
 
         <div
           ref={wrapRef}
-          className="relative mt-12 flex max-h-[calc(100svh-7.5rem)] flex-col items-end gap-3 overflow-y-auto pr-1"
+          className="relative mt-4 flex max-h-[calc(100svh-7.5rem)] flex-col items-end gap-3 overflow-y-auto pr-1"
         >
           <div
             ref={travelerRef}

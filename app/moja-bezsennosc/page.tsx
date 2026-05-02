@@ -81,7 +81,7 @@ export default function MojaBezsennoscPage() {
     <>
       <Link
         href="/"
-        className="fixed top-6 left-6 z-30 border border-foreground/60 px-5 py-2 font-heading text-[10px] uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-accent hover:text-accent sm:top-8 sm:left-8 sm:px-6 sm:py-3 sm:text-xs"
+        className="fixed top-6 left-6 z-30 border border-foreground/60 bg-background/95 px-5 py-2 font-heading text-[10px] uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-accent hover:text-accent sm:top-8 sm:left-8 sm:px-6 sm:py-3 sm:text-xs"
       >
         Powrót
       </Link>
