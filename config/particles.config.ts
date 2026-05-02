@@ -20,7 +20,7 @@ export const particlesConfig: ISourceOptions = {
         default: "bounce",
       },
       random: true,
-      speed: 0.35,
+      speed: 0.25,
       straight: false,
     },
     number: {
@@ -60,7 +60,7 @@ export const particlesConfig: ISourceOptions = {
             density: {
               enable: false,
             },
-            value: 35,
+            value: 25,
           },
         },
       },
