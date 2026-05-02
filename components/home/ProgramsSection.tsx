@@ -29,11 +29,13 @@ function ProgramRow({
     program.bundlePanels && program.bundlePanels.length > 0
       ? program.bundlePanels
       : [{ heading: "", sections: program.sections }];
-  const tileDescription = program.hideDescription
-    ? `Pakiet łączony w cenie ${program.price}${
-        program.savingsNote ? `, ${program.savingsNote.toLowerCase()}` : ""
-      }.`
-    : program.description;
+  // const tileDescription = program.hideDescription
+  //   ? `Pakiet łączony w cenie ${program.price}${
+  //       program.savingsNote ? `, ${program.savingsNote.toLowerCase()}` : ""
+  //     }.`
+  //   : program.description;
+
+  const tileDescription = program.description;
 
   return (
     <SlideUp delay={0.1 * (index + 1)} triggerOnScroll>

@@ -18,4 +18,5 @@ export const INSOMNIA_DOT_NAV_SECTIONS = [
       id: `insomnia-${slugifyTitle(block.title)}`,
       label: block.title,
     })),
+  { id: "insomnia-mapa-sukcesu", label: "Mapa sukcesu" },
 ] as const;

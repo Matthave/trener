@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { SlideIn } from "@/components/animations/SlideIn";
 import { cn } from "@/lib/utils";
 
 import { InsomniaDotNavMount } from "./_components/InsomniaDotNavMount";
+import { SolutionPathSection } from "./_components/SolutionPathSection";
 import { INSOMNIA_DOT_NAV_SECTIONS } from "./_data/nav-sections";
 import { insomniaStory, type StoryBlock } from "./_data/story-content";
 
@@ -50,7 +52,7 @@ function StoryTile({
       <SlideIn direction={direction} className="w-full max-w-[940px]">
         <aside
           className={cn(
-            "rounded-[4px] border border-foreground/20 bg-background/95 px-6 py-7 shadow-[0_0_0_1px_rgba(198,198,198,0.04)] backdrop-blur-[2px] sm:px-10 sm:py-8",
+            "rounded-[4px] border border-foreground/20 bg-background/95  px-6 py-7 shadow-[0_0_0_1px_rgba(198,198,198,0.04)] backdrop-blur-[2px] bg-opacity-50 sm:px-10 sm:py-8",
             isRightAligned ? "text-right" : "text-left",
           )}
         >
@@ -77,6 +79,13 @@ function StoryTile({
 export default function MojaBezsennoscPage() {
   return (
     <>
+      <Link
+        href="/"
+        className="fixed top-6 left-6 z-30 border border-foreground/60 px-5 py-2 font-heading text-[10px] uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-accent hover:text-accent sm:top-8 sm:left-8 sm:px-6 sm:py-3 sm:text-xs"
+      >
+        Powrót
+      </Link>
+
       <main className="overflow-hidden px-6 py-20 sm:px-10 lg:px-16 xl:px-24 xl:py-28">
         <article className="mx-auto max-w-[1180px]">
           <header
@@ -117,6 +126,8 @@ export default function MojaBezsennoscPage() {
             })}
           </div>
         </article>
+
+        <SolutionPathSection />
       </main>
       <InsomniaDotNavMount />
     </>
