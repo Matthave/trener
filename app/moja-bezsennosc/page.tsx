@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { SlideIn } from "@/components/animations/SlideIn";
 import { cn } from "@/lib/utils";
 
+import { InsomniaDotNavMount } from "./_components/InsomniaDotNavMount";
+import { INSOMNIA_DOT_NAV_SECTIONS } from "./_data/nav-sections";
 import { insomniaStory, type StoryBlock } from "./_data/story-content";
 
 export const metadata: Metadata = {
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
     "Osobista historia o bezsenności, lęku, przeciążeniu i powrocie do regenerującego snu.",
 };
 
-function TextSection({ block }: { block: Extract<StoryBlock, { type: "text" }> }) {
+function TextSection({
+  block,
+}: {
+  block: Extract<StoryBlock, { type: "text" }>;
+}) {
   return (
     <div className="mx-auto flex max-w-[860px] flex-col gap-5 font-body text-[15px] leading-[26px] text-foreground sm:gap-7 sm:text-[16px] sm:leading-[28px]">
       {block.paragraphs.map((paragraph) => (
@@ -23,9 +29,11 @@ function TextSection({ block }: { block: Extract<StoryBlock, { type: "text" }> }
 
 function StoryTile({
   block,
+  id,
   tileIndex,
 }: {
   block: Extract<StoryBlock, { type: "tile" }>;
+  id: string;
   tileIndex: number;
 }) {
   const isRightAligned = tileIndex % 2 === 0;
@@ -33,15 +41,13 @@ function StoryTile({
 
   return (
     <div
+      id={id}
       className={cn(
-        "my-5 flex w-full sm:my-[30px]",
+        "my-5 flex w-full scroll-mt-6 sm:my-[30px]",
         isRightAligned ? "justify-end" : "justify-start",
       )}
     >
-      <SlideIn
-        direction={direction}
-        className="w-full max-w-[940px]"
-      >
+      <SlideIn direction={direction} className="w-full max-w-[940px]">
         <aside
           className={cn(
             "rounded-[4px] border border-foreground/20 bg-background/95 px-6 py-7 shadow-[0_0_0_1px_rgba(198,198,198,0.04)] backdrop-blur-[2px] sm:px-10 sm:py-8",
@@ -70,40 +76,49 @@ function StoryTile({
 
 export default function MojaBezsennoscPage() {
   return (
-    <main className="overflow-hidden px-6 py-20 sm:px-10 lg:px-16 xl:px-24 xl:py-28">
-      <article className="mx-auto max-w-[1180px]">
-        <header className="mx-auto mb-10 max-w-[860px] sm:mb-16">
-          <p className="mb-5 font-heading text-[10px] uppercase tracking-[0.25em] text-accent sm:text-xs">
-            Historia snu
-          </p>
-          <h1 className="font-heading text-[26px] leading-[1.1] font-normal uppercase text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-            {insomniaStory.title}
-          </h1>
-          <p className="mt-5 max-w-[680px] font-body text-[15px] leading-[26px] text-foreground/80 sm:mt-6 sm:text-[16px] sm:leading-[28px]">
-            {insomniaStory.lead}
-          </p>
-        </header>
+    <>
+      <main className="overflow-hidden px-6 py-20 sm:px-10 lg:px-16 xl:px-24 xl:py-28">
+        <article className="mx-auto max-w-[1180px]">
+          <header
+            id={INSOMNIA_DOT_NAV_SECTIONS[0].id}
+            className="mx-auto mb-10 max-w-[860px] scroll-mt-6 sm:mb-16"
+          >
+            <p className="mb-5 font-heading text-[10px] uppercase tracking-[0.25em] text-accent sm:text-xs">
+              Historia snu
+            </p>
+            <h1 className="font-heading text-[26px] leading-[1.1] font-normal uppercase text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+              {insomniaStory.title}
+            </h1>
+            <p className="mt-5 max-w-[680px] font-body text-[15px] leading-[26px] text-foreground/80 sm:mt-6 sm:text-[16px] sm:leading-[28px]">
+              {insomniaStory.lead}
+            </p>
+          </header>
 
-        <div className="flex flex-col gap-5 sm:gap-7">
-          {insomniaStory.blocks.map((block, index) => {
-            if (block.type === "text") {
-              return <TextSection key={`text-${index}`} block={block} />;
-            }
+          <div className="flex flex-col gap-5 sm:gap-7">
+            {insomniaStory.blocks.map((block, index) => {
+              if (block.type === "text") {
+                return <TextSection key={`text-${index}`} block={block} />;
+              }
 
-            const currentTileIndex = insomniaStory.blocks
-              .slice(0, index)
-              .filter((storyBlock) => storyBlock.type === "tile").length;
+              const currentTileIndex = insomniaStory.blocks
+                .slice(0, index)
+                .filter((storyBlock) => storyBlock.type === "tile").length;
+              const navSection =
+                INSOMNIA_DOT_NAV_SECTIONS[currentTileIndex + 1];
 
-            return (
-              <StoryTile
-                key={`tile-${block.title}`}
-                block={block}
-                tileIndex={currentTileIndex}
-              />
-            );
-          })}
-        </div>
-      </article>
-    </main>
+              return (
+                <StoryTile
+                  key={`tile-${block.title}`}
+                  block={block}
+                  id={navSection.id}
+                  tileIndex={currentTileIndex}
+                />
+              );
+            })}
+          </div>
+        </article>
+      </main>
+      <InsomniaDotNavMount />
+    </>
   );
 }
