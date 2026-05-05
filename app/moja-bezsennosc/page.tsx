@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { InsomniaDotNavMount } from "./_components/InsomniaDotNavMount";
 import { SolutionPathSection } from "./_components/SolutionPathSection";
+import { WhySection } from "./_components/WhySection";
 import { INSOMNIA_DOT_NAV_SECTIONS } from "./_data/nav-sections";
 import { insomniaStory, type StoryBlock } from "./_data/story-content";
 
@@ -65,7 +66,7 @@ function StoryTile({
               isRightAligned ? "ml-auto" : "mr-auto",
             )}
           />
-          <div className="mt-5 flex flex-col gap-4 font-heading text-[14px] leading-[22px] text-foreground sm:mt-7 sm:gap-5 sm:text-[16px] sm:leading-[25px]">
+          <div className="mt-5 flex flex-col gap-4 font-body text-[14px] leading-[22px] text-foreground sm:mt-7 sm:gap-5 sm:text-[16px] sm:leading-[25px]">
             {block.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -128,6 +129,7 @@ export default function MojaBezsennoscPage() {
         </article>
 
         <SolutionPathSection />
+        <WhySection />
       </main>
       <InsomniaDotNavMount />
     </>

@@ -54,7 +54,7 @@ const TILES = [
   },
 ];
 
-const CORNER_RADIUS = 200;
+const CORNER_RADIUS = 60;
 const ACCENT = "#9FC6FF";
 const DIM_ACCENT = "rgba(159, 198, 255, 0.12)";
 const DOT_R = 15;
@@ -348,7 +348,9 @@ export function SolutionPathSection() {
                     />
                     <div className="mt-5 flex flex-col gap-4 font-heading text-[14px] leading-[22px] text-foreground sm:mt-7 sm:gap-5 sm:text-[16px] sm:leading-[25px]">
                       {tile.paragraphs.map((p) => (
-                        <p key={p}>{p}</p>
+                        <p className="font-body" key={p}>
+                          {p}
+                        </p>
                       ))}
                     </div>
                   </aside>

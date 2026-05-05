@@ -19,4 +19,5 @@ export const INSOMNIA_DOT_NAV_SECTIONS = [
       label: block.title,
     })),
   { id: "insomnia-mapa-sukcesu", label: "Mapa sukcesu" },
+  { id: "why-section", label: "Dlaczego?" },
 ] as const;

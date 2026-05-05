@@ -86,17 +86,6 @@ function ProgramRow({
               >
                 {program.title}
               </h3>
-              <span
-                aria-hidden
-                className={cn(
-                  "shrink-0 text-[20px] leading-none text-accent/70 transition-[opacity,transform,color] duration-200 ease-out",
-                  "opacity-70 lg:group-hover/pkg:translate-x-[3px] lg:group-hover/pkg:opacity-100",
-                  !isOpen && "lg:group-hover/pkg:text-[#111]",
-                  isOpen && "opacity-100 text-accent",
-                )}
-              >
-                ›
-              </span>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -110,15 +99,15 @@ function ProgramRow({
                 {tileDescription}
               </p>
               <div className="flex items-center gap-3">
-                <span
+                {/* <span
                   aria-hidden
                   className={cn(
-                    "h-px flex-1 bg-gradient-to-r transition-opacity duration-200 ease-out",
+                    "h-px w-1/2 bg-gradient-to-r  transition-opacity duration-200 ease-out",
                     isOpen
                       ? "from-accent to-transparent opacity-60"
                       : "from-accent to-transparent opacity-35 lg:from-[#111] lg:group-hover/pkg:opacity-55",
                   )}
-                />
+                /> */}
                 <span
                   className={cn(
                     "font-mono text-[10px] tracking-[0.2em] transition-[opacity,color] duration-200 ease-out lg:text-[11px]",
