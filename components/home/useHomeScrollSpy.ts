@@ -7,6 +7,7 @@ export const HOME_DOT_NAV_SECTIONS = [
   { id: "section-proces", label: "Proces" },
   { id: "programs", label: "Pakiety" },
   { id: "section-opinie", label: "Opinie" },
+  { id: "about-me", label: "O mnie" },
   { id: "contact", label: "Kontakt" },
 ] as const;
 

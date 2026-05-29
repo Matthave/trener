@@ -74,7 +74,7 @@ const DIETA_OFFER_SECTIONS: readonly ProgramSection[] = [
 
 const SEN_OFFER_SECTIONS: readonly ProgramSection[] = [
   {
-    title: "Diagnoza",
+    title: "Określenie problemu",
     items: [
       "Obszerny wywiad z zakresu higieny snu oraz nawyków dziennych i wieczornych.",
       "Prowadzenie i analiza dziennika snu.",
@@ -85,7 +85,7 @@ const SEN_OFFER_SECTIONS: readonly ProgramSection[] = [
   {
     title: "Wdrożenie",
     items: [
-      "Pomoc we wdrożeniu technik CBT-I.",
+      "Pomoc we wdrożeniu technik CBT-I - kontrola bodźców, kompresja snu, edukacja o śnie i rytmie dobowym.",
       "Budowa rutyny wieczornej dopasowanej do trybu życia klienta.",
       "Techniki relaksacyjne i eliminacja nawyków szkodliwych dla snu.",
     ],
@@ -95,6 +95,13 @@ const SEN_OFFER_SECTIONS: readonly ProgramSection[] = [
     items: [
       "Obszerna rozpiska suplementacji oparta na aktualnych badaniach.",
       "Stały kontakt i modyfikacja protokołu na podstawie dziennika snu.",
+    ],
+  },
+  {
+    title: "Uwaga!",
+    items: [
+      "Nie jestem lekarzem ani psychoterapeutą. Jestem trenerem personalnym i ekspertem w obszarze zdrowego trybu życia.",
+      "Mam bardzo jasno określony zakres wsparcia, szczególnie jeśli chodzi o zaburzenia snu i czynniki, które mogą wpływać na bezsenność.",
     ],
   },
 ];
@@ -140,7 +147,7 @@ export const programs: Program[] = [
     id: "04",
     title: "Treningi personalne",
     description:
-      "Treningi 1:1 u Ciebie lub w klubie: technika na żywo, plan i progresja na bieżąco, elastyczne terminy. Warszawa i okolice — zapytaj o wolny termin.",
+      "Treningi 1:1 u Ciebie lub w klubie: technika na żywo, plan i progresja na bieżąco. Warszawa i okolice — zapytaj o wolny termin.",
     price: "200 zł",
     sections: [
       {

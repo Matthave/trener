@@ -106,6 +106,7 @@ function Step1() {
           value={treningowy.aktywnosci}
           onChange={(e) => updateTreningowy({ aktywnosci: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -123,6 +124,7 @@ function Step1() {
           value={treningowy.sprzet}
           onChange={(e) => updateTreningowy({ sprzet: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -147,6 +149,7 @@ function Step2() {
           value={treningowy.plan}
           onChange={(e) => updateTreningowy({ plan: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -163,6 +166,7 @@ function Step2() {
           value={treningowy.poziom}
           onChange={(e) => updateTreningowy({ poziom: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -172,13 +176,14 @@ function Step2() {
           Twoje ulubione ćwiczenia
         </h3>
         <p className="text-foreground text-sm leading-relaxed">
-          Wymień kjakie ćwiczenia są najbardziej lubiane i chętnie je widzisz
-          w swoim planie treningowym
+          Wymień kjakie ćwiczenia są najbardziej lubiane i chętnie je widzisz w
+          swoim planie treningowym
         </p>
         <textarea
           value={treningowy.ulubione}
           onChange={(e) => updateTreningowy({ ulubione: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -195,6 +200,7 @@ function Step2() {
           value={treningowy.nielubiane}
           onChange={(e) => updateTreningowy({ nielubiane: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>

@@ -158,7 +158,35 @@ function renderSection(title: string, fields: FieldDef[]): string {
   `;
 }
 
-export function formatFormDataToHtml(data: FormularzData): string {
+function renderAttachmentsNote(fileNames: string[]): string {
+  if (fileNames.length === 0) return "";
+
+  const items = fileNames
+    .map(
+      (name) =>
+        `<li style="margin-bottom:4px;color:#555;">${escapeHtml(name)}</li>`,
+    )
+    .join("\n");
+
+  return `
+    <div style="margin-top:16px;padding:12px 16px;border:1px solid #9FC6FF;background:#f8fbff;">
+      <p style="margin:0 0 8px;font-size:14px;font-weight:600;color:#111;">
+        Załączone pliki (${fileNames.length})
+      </p>
+      <ul style="margin:0;padding-left:20px;font-size:14px;">
+        ${items}
+      </ul>
+      <p style="margin:8px 0 0;font-size:12px;color:#888;">
+        Pliki dołączone jako załączniki do tego e-maila.
+      </p>
+    </div>
+  `;
+}
+
+export function formatFormDataToHtml(
+  data: FormularzData,
+  attachmentFileNames: string[] = [],
+): string {
   const sections: string[] = [
     renderSection("Ankieta startowa", buildAnkietaFields(data.ankieta)),
     renderSection("Wywiad żywieniowy", buildZywienieFields(data.zywienie)),
@@ -179,6 +207,7 @@ export function formatFormDataToHtml(data: FormularzData): string {
       <p style="color:#666;font-size:14px;">
         Wysłano: ${new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" })}
       </p>
+      ${renderAttachmentsNote(attachmentFileNames)}
       ${sections.join("\n")}
     </div>
   `;

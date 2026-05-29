@@ -25,7 +25,7 @@ const clients: ClientCase[] = [
       { label: "tkanka tłuszczowa", before: "45", after: "25", unit: "%" },
     ],
     quote:
-      "Brutal but effective. The numbers don't lie. The approach is purely scientific.",
+      "Trener z prawdziwym powołaniem, któremu zależy na Twoich wynikach, a nie tylko na kasie. Nawet po wyjściu z siłowni potrafi świetnie zmotywować do trzymania postanowień!",
   },
   {
     subject: "Dominika",
@@ -35,7 +35,7 @@ const clients: ClientCase[] = [
       { label: "Hip Thrust", before: "40", after: "100", unit: "kg" },
     ],
     quote:
-      "Complete paradigm shift in how I view training and nutrition. Zero wasted effort.",
+      "Rewelacyjne podejście do klienta i w 100% indywidualnie dopasowana dieta. Ten trener naprawdę żyje Twoim sukcesem i wspiera Cię na każdym kroku.",
   },
   {
     subject: "Dawid",
@@ -44,7 +44,8 @@ const clients: ClientCase[] = [
       { label: "Waga", before: "80", after: "70", unit: "kg" },
       { label: "Tkanka tłuszczowa", before: "30", after: "18", unit: "%" },
     ],
-    quote: "The programming is meticulous. Every set and rep is accounted for.",
+    quote:
+      "Ogromny plus za cierpliwą naukę prawidłowej techniki i ciągłą asystę podczas ćwiczeń. Trener skupia się wyłącznie na Tobie, a nie na swoim telefonie.",
   },
   {
     subject: "Sylwester",
@@ -54,7 +55,7 @@ const clients: ClientCase[] = [
       { label: "Wyciskanie klatka", before: "40", after: "80", unit: "kg" },
     ],
     quote:
-      "Brutal but effective. The numbers don't lie. The approach is purely scientific.",
+      "Pełne zaangażowanie podczas całego treningu bez zerkania w telefon. Dzięki niemu w końcu wiem, jak poprawnie wykonywać każde ćwiczenie!",
   },
   {
     subject: "Robert",
@@ -64,7 +65,7 @@ const clients: ClientCase[] = [
       { label: "Obwód ramienia", before: "31", after: "38", unit: "cm" },
     ],
     quote:
-      "Complete paradigm shift in how I view training and nutrition. Zero wasted effort.",
+      "Plany treningowe doszlifowane do perfekcji. Rozkład treningowy dostosowany do moich potrzeb i możliwości.",
   },
   {
     subject: "Patrycja",
@@ -73,7 +74,8 @@ const clients: ClientCase[] = [
       { label: "Waga", before: "60", after: "53", unit: "kg" },
       { label: "Tkanka tłuszczowa", before: "28", after: "22", unit: "%" },
     ],
-    quote: "The programming is meticulous. Every set and rep is accounted for.",
+    quote:
+      "Plany żywieniowe dostosowane 100% pode mnie, bez zbędnych restrykcji i udziwnień.",
   },
 ];
 
@@ -81,7 +83,7 @@ export function ClientDataSection() {
   return (
     <section
       id="section-opinie"
-      className="px-6 py-24 sm:px-10 lg:px-16 xl:px-24 xl:py-32"
+      className="px-6 py-24 sm:px-10 xl:pr-42 xl:py-32"
     >
       <div className="mx-auto max-w-[1920px]">
         <h2 className="text-right font-heading text-4xl font-bold uppercase sm:text-6xl lg:text-7xl xl:text-9xl leading-[1.3]">
@@ -95,7 +97,7 @@ export function ClientDataSection() {
               delay={0.05 * (i + 1)}
               triggerOnScroll
             >
-              <div className="relative overflow-hidden min-h-[236px] backdrop-blur-[2px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 sm:p-8">
+              <div className="relative overflow-hidden min-h-[281px] backdrop-blur-[2px] rounded-lg border border-foreground/10 bg-foreground/[0.03] p-6 sm:p-8">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-accent/15 sm:h-40 sm:w-40"

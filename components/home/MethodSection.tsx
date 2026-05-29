@@ -76,7 +76,7 @@ export function MethodSection() {
   return (
     <section
       id="section-proces"
-      className="px-6 py-24 sm:px-10 lg:px-16 xl:px-24 xl:py-42"
+      className="px-6 py-24 sm:px-10 xl:pr-42 xl:py-42"
     >
       <div className="mx-auto max-w-[1920px]">
         <div className="grid grid-cols-1 items-center gap-16 2xl:grid-cols-[1fr_1.5fr] lg:gap-12">

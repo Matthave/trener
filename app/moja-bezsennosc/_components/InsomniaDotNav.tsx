@@ -8,7 +8,7 @@ import { INSOMNIA_DOT_NAV_SECTIONS } from "../_data/nav-sections";
 
 const ACCENT = "#7ab3e0";
 /** Nieaktywna kropka — bez box-shadow, tylko półprzezroczysty akcent jako fill */
-const INACTIVE_DOT = "rgba(122, 179, 224, 0.5)";
+const INACTIVE_DOT = "#aaa";
 
 const INIT_DELAY_MS = 100;
 const PHASE2_START_MS = 80;
@@ -19,10 +19,10 @@ const PHASE2_MOVE_TRANSITION =
 const PHASE3_TRANSITION =
   "width 150ms cubic-bezier(0.34, 1.4, 0.64, 1), height 150ms cubic-bezier(0.34, 1.4, 0.64, 1), border-radius 150ms cubic-bezier(0.34, 1.4, 0.64, 1), top 150ms cubic-bezier(0.34, 1.4, 0.64, 1), left 150ms cubic-bezier(0.34, 1.4, 0.64, 1)";
 
-const W0 = 8;
-const H0 = 8;
-const W1 = 5;
-const H1 = 14;
+const W0 = 9;
+const H0 = 9;
+const W1 = 6;
+const H1 = 15;
 const BR_SQUASH = 3;
 const SPY_DEBOUNCE_MS = 120;
 

@@ -7,7 +7,7 @@ export function FooterSection() {
         <div className="mb-10 h-px w-full bg-foreground/20" />
         <div className="flex justify-center">
           <Image
-            src="/images/m3.png"
+            src="/images/file.svg"
             alt="Logo"
             width={70}
             height={70}

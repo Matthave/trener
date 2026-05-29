@@ -30,6 +30,7 @@ function Step1() {
           value={sen.godziny}
           onChange={(e) => updateSen({ godziny: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -42,6 +43,7 @@ function Step1() {
           value={sen.zasypianie}
           onChange={(e) => updateSen({ zasypianie: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -54,6 +56,7 @@ function Step1() {
           value={sen.wybudzenia}
           onChange={(e) => updateSen({ wybudzenia: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -66,6 +69,7 @@ function Step1() {
           value={sen.iloscSnu}
           onChange={(e) => updateSen({ iloscSnu: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -87,6 +91,7 @@ function Step2() {
           value={sen.srodki}
           onChange={(e) => updateSen({ srodki: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -99,6 +104,7 @@ function Step2() {
           value={sen.nastroj}
           onChange={(e) => updateSen({ nastroj: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -112,6 +118,7 @@ function Step2() {
           value={sen.ocena}
           onChange={(e) => updateSen({ ocena: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -124,6 +131,7 @@ function Step2() {
           value={sen.kawa}
           onChange={(e) => updateSen({ kawa: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -145,6 +153,7 @@ function Step3() {
           value={sen.alkohol}
           onChange={(e) => updateSen({ alkohol: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -157,6 +166,7 @@ function Step3() {
           value={sen.posilek}
           onChange={(e) => updateSen({ posilek: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -169,6 +179,7 @@ function Step3() {
           value={sen.chrapanie}
           onChange={(e) => updateSen({ chrapanie: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -182,6 +193,7 @@ function Step3() {
           value={sen.przerywanie}
           onChange={(e) => updateSen({ przerywanie: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -203,6 +215,7 @@ function Step4() {
           value={sen.zasnac}
           onChange={(e) => updateSen({ zasnac: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -215,6 +228,7 @@ function Step4() {
           value={sen.wybudzenie}
           onChange={(e) => updateSen({ wybudzenie: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -227,6 +241,7 @@ function Step4() {
           value={sen.trening}
           onChange={(e) => updateSen({ trening: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -240,6 +255,7 @@ function Step4() {
           value={sen.niepokoj}
           onChange={(e) => updateSen({ niepokoj: e.target.value })}
           rows={3}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>

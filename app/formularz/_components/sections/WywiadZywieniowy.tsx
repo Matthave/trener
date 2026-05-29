@@ -439,11 +439,12 @@ function Step3() {
         <h3 className="font-heading text-lg md:text-xl uppercase tracking-wider">
           Twoje ulubione produkty
         </h3>
-        <input
-          type="text"
+        <textarea
           value={zywienie.ulubione}
           onChange={(e) => updateZywienie({ ulubione: e.target.value })}
-          className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors"
+          rows={5}
+          placeholder="Napisz tutaj"
+          className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
 
@@ -451,11 +452,12 @@ function Step3() {
         <h3 className="font-heading text-lg md:text-xl uppercase tracking-wider">
           Twoje nielubiane produkty
         </h3>
-        <input
-          type="text"
+        <textarea
           value={zywienie.nielubiane}
           onChange={(e) => updateZywienie({ nielubiane: e.target.value })}
-          className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors"
+          rows={5}
+          placeholder="Napisz tutaj"
+          className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
     </div>
@@ -483,6 +485,7 @@ function Step4() {
           value={zywienie.dieta}
           onChange={(e) => updateZywienie({ dieta: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>
@@ -494,8 +497,8 @@ function Step4() {
 
         <div className="flex flex-col gap-4 text-foreground text-sm leading-relaxed">
           <p>
-            Prowadzisz siedzący tryb życia i pracujesz przy biurku, a może
-            w ciągu dnia jesteś bardzo aktywny lub aktywna?
+            Prowadzisz siedzący tryb życia i pracujesz przy biurku, a może w
+            ciągu dnia jesteś bardzo aktywny lub aktywna?
           </p>
           <p>
             Opisz, jak wygląda Twój typowy dzień, abym mógł obliczyć Twoje
@@ -507,6 +510,7 @@ function Step4() {
           value={zywienie.wydatek}
           onChange={(e) => updateZywienie({ wydatek: e.target.value })}
           rows={5}
+          placeholder="Napisz tutaj"
           className="w-full bg-transparent border-b border-foreground/60 py-3 text-lg text-accent placeholder:text-foreground/60 focus:border-accent focus:outline-none transition-colors resize-none"
         />
       </div>

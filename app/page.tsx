@@ -3,8 +3,8 @@ import { MethodSection } from "@/components/home/MethodSection";
 import { ProgramsSection } from "@/components/home/ProgramsSection";
 import { ClientDataSection } from "@/components/home/ClientDataSection";
 import { MarqueeSection } from "@/components/home/MarqueeSection";
+import { AboutMeSection } from "@/components/home/AboutMeSection";
 import { ContactFormSection } from "@/components/home/ContactFormSection";
-import { FooterSection } from "@/components/home/FooterSection";
 import { HomeDotNavMount } from "@/components/home/HomeDotNavMount";
 
 export default function Home() {
@@ -16,8 +16,9 @@ export default function Home() {
         <ProgramsSection />
         <ClientDataSection />
         <MarqueeSection />
+        <AboutMeSection />
         <ContactFormSection />
-        <FooterSection />
+        {/* <FooterSection /> */}
       </main>
       <HomeDotNavMount />
     </>

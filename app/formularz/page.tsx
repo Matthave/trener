@@ -12,6 +12,7 @@ import { WywiadTreningowy } from "./_components/sections/WywiadTreningowy";
 import { Zdrowie } from "./_components/sections/Zdrowie";
 import { Sen } from "./_components/sections/Sen";
 import { useFormularzStore } from "@/lib/stores/formularz-store";
+import { useFormularzFilesStore } from "@/lib/stores/formularz-files-store";
 import { sendFormAction } from "./actions/sendForm";
 
 interface SectionComponentProps {
@@ -72,6 +73,8 @@ function FormularzPageContent() {
 
   const formData = useFormularzStore((s) => s.formData);
   const resetStore = useFormularzStore((s) => s.resetStore);
+  const files = useFormularzFilesStore((s) => s.files);
+  const clearFiles = useFormularzFilesStore((s) => s.clearFiles);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -82,7 +85,13 @@ function FormularzPageContent() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const result = await sendFormAction(formData);
+    const payload = new FormData();
+    payload.append("payload", JSON.stringify(formData));
+    for (const file of files) {
+      payload.append("files", file);
+    }
+
+    const result = await sendFormAction(payload);
 
     setIsSubmitting(false);
 
@@ -92,6 +101,7 @@ function FormularzPageContent() {
         .join(" ");
       setSubmittedName(name);
       resetStore();
+      clearFiles();
       setIsSubmitted(true);
     } else {
       setSubmitError(result.error);

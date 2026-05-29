@@ -66,10 +66,7 @@ export function ContactFormSection() {
   };
 
   return (
-    <section
-      id="contact"
-      className="px-6 py-24 sm:px-10 lg:px-16 xl:px-24 xl:py-32"
-    >
+    <section id="contact" className="px-6 py-24 sm:px-10 xl:pr-42 xl:py-32">
       <div className="mx-auto max-w-[1920px]">
         <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
           {/* Left column */}
@@ -127,7 +124,7 @@ export function ContactFormSection() {
                       id="fullName"
                       type="text"
                       placeholder="Imię i nazwisko"
-                      autoComplete="name"
+                      autoComplete="off"
                       {...register("fullName")}
                       className="border-b border-background/30 bg-transparent pb-2 font-body text-sm text-background outline-none placeholder:text-background/40 transition-colors focus:border-background sm:text-base"
                     />
@@ -150,7 +147,7 @@ export function ContactFormSection() {
                       id="email"
                       type="email"
                       placeholder="Adres e-mail"
-                      autoComplete="email"
+                      autoComplete="off"
                       {...register("email")}
                       className="border-b border-background/30 bg-transparent pb-2 font-body text-sm text-background outline-none placeholder:text-background/40 transition-colors focus:border-background sm:text-base"
                     />
@@ -173,6 +170,7 @@ export function ContactFormSection() {
                       id="currentState"
                       type="text"
                       placeholder="Wiek / waga / wzrost"
+                      autoComplete="off"
                       {...register("currentState")}
                       className="border-b border-background/30 bg-transparent pb-2 font-body text-sm text-background outline-none placeholder:text-background/40 transition-colors focus:border-background sm:text-base"
                     />
@@ -254,6 +252,7 @@ export function ContactFormSection() {
                       id="briefHistory"
                       rows={1}
                       placeholder="Dotychczasowe doświadczenie treningowe"
+                      autoComplete="off"
                       {...register("briefHistory")}
                       className="resize-none border-b border-background/30 bg-transparent pb-2 font-body text-sm text-background outline-none placeholder:text-background/40 transition-colors focus:border-background sm:text-base"
                     />

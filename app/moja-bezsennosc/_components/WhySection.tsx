@@ -17,7 +17,7 @@ const WHY_TILES = [
   },
   {
     title: "Ambicje - Overtraining Syndrome",
-    text: "Przez wiele miesięcy, być może nawet lat, stawiałem sobie zbyt ambitne cele treningowe. Jednak najgorszym błędem było coś co długi czas postrzegałem jako ogromny plus - nie dopuszczałem do siebie myśli o zrezygnowaniu z treningu. Nieważne co się działo - choroba, gorszy dzień, słaby sen, za mało kalorii, brak czasu, brak regeneracji, zbyt zbity tydzień treningowych - trening musiał się odbyć. Przez wiele lat zmagałem się z 'bólami obciążeniowymi pleców' ignorując ten sygnał z ciałą, który z każdym rokiem narastał, doprowadzając do tego, że w trakcie treningu musiałem rozmasowywać mięśnie piłeczką, by nie doszło do spięcia mięśni, które wykluczy mnie z treningu na kilka dni. Uważam to za czynniki, które wpędziły mnie w OTS.",
+    text: "Przez wiele miesięcy, być może nawet lat, stawiałem sobie zbyt ambitne cele treningowe i nie tylko. Jednak najgorszym błędem było coś co długi czas postrzegałem jako ogromny plus - nie dopuszczałem do siebie myśli o zrezygnowaniu z treningu. Nieważne co się działo - choroba, gorszy dzień, słaby sen, za mało kalorii, brak czasu, brak regeneracji, zbyt zbity tydzień treningowych - trening musiał się odbyć. Przez wiele lat zmagałem się z 'bólami obciążeniowymi pleców' ignorując ten sygnał z ciałą, który z każdym rokiem narastał, doprowadzając do tego, że w trakcie treningu musiałem rozmasowywać mięśnie piłeczką, by nie doszło do spięcia mięśni, które wykluczy mnie z treningu na kilka dni. Uważam to za czynniki, które wpędziły mnie w OTS.",
   },
   {
     title: "Stres",

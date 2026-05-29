@@ -193,10 +193,7 @@ export function ProgramsSection() {
   const baseId = useId();
 
   return (
-    <section
-      id="programs"
-      className="px-6 py-24 sm:px-10 lg:px-16 xl:px-24 xl:py-32"
-    >
+    <section id="programs" className="px-6 py-24 sm:px-10 xl:pr-42 xl:py-32">
       <div className="mx-auto max-w-[1920px]">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <h2 className="font-heading text-3xl leading-[1.05] font-bold uppercase sm:text-7xl lg:text-8xl xl:text-9xl">

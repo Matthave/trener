@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { HOME_DOT_NAV_SECTIONS } from "@/components/home/useHomeScrollSpy";
 
 const ACCENT = "#7ab3e0";
-const STATIC_DOT = "#282828";
+const STATIC_DOT = "#aaa";
 
 const INIT_DELAY_MS = 100;
 const PHASE2_START_MS = 80;
@@ -16,10 +16,10 @@ const PHASE2_MOVE_TRANSITION =
 const PHASE3_TRANSITION =
   "width 150ms cubic-bezier(0.34, 1.4, 0.64, 1), height 150ms cubic-bezier(0.34, 1.4, 0.64, 1), border-radius 150ms cubic-bezier(0.34, 1.4, 0.64, 1), top 150ms cubic-bezier(0.34, 1.4, 0.64, 1), left 150ms cubic-bezier(0.34, 1.4, 0.64, 1)";
 
-const W0 = 8;
-const H0 = 8;
-const W1 = 5;
-const H1 = 14;
+const W0 = 9;
+const H0 = 9;
+const W1 = 6;
+const H1 = 15;
 const BR_SQUASH = 3;
 /** Spy często przeskakuje pośrednio przy długim scrollu — jedna animacja po ustabilizowaniu sekcji. */
 const SPY_DEBOUNCE_MS = 120;
@@ -280,7 +280,7 @@ export function DotNav({ activeId, onNavigate }: DotNavProps) {
             >
               <span
                 className={cn(
-                  "pointer-events-none absolute right-[calc(0.5rem+8px)] whitespace-nowrap font-heading text-[11px] uppercase tracking-[0.12em] transition-[opacity,transform,color] duration-200 ease-out mr-3",
+                  "pointer-events-none absolute right-[calc(0.5rem+12px)] whitespace-nowrap font-heading text-[12px] uppercase tracking-[0.12em] transition-[opacity,transform,color] duration-200 ease-out mr-3",
                   showLabel
                     ? "translate-x-0 opacity-100 text-shadow-sm/100 mr-4"
                     : "translate-x-1 opacity-0 mr-4",

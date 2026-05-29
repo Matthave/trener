@@ -2,6 +2,12 @@
 
 import { Resend } from "resend";
 import { z } from "zod";
+import {
+  isAllowedFile,
+  MAX_FILE_BYTES,
+  MAX_FILES,
+  MAX_TOTAL_BYTES,
+} from "@/lib/formularz/file-upload-config";
 import type { FormularzData } from "@/lib/stores/formularz-store";
 import { formatFormDataToHtml } from "./format-form-html";
 
@@ -31,8 +37,38 @@ const formDataSchema = z.object({
   sen: z.object({}).passthrough(),
 });
 
+function validateFiles(files: File[]): string | null {
+  if (files.length > MAX_FILES) {
+    return `Możesz dodać maksymalnie ${MAX_FILES} plików.`;
+  }
+
+  let totalBytes = 0;
+
+  for (const file of files) {
+    if (!(file instanceof File) || file.size === 0) {
+      return "Nieprawidłowy plik w załącznikach.";
+    }
+
+    if (!isAllowedFile(file)) {
+      return "Niedozwolony format pliku.";
+    }
+
+    if (file.size > MAX_FILE_BYTES) {
+      return `Plik „${file.name}” przekracza dozwolony rozmiar.`;
+    }
+
+    totalBytes += file.size;
+  }
+
+  if (totalBytes > MAX_TOTAL_BYTES) {
+    return "Łączny rozmiar załączników jest zbyt duży.";
+  }
+
+  return null;
+}
+
 export async function sendFormAction(
-  data: FormularzData,
+  formData: FormData,
 ): Promise<ActionResponse> {
   const envResult = envSchema.safeParse(process.env);
   if (!envResult.success) {
@@ -42,10 +78,32 @@ export async function sendFormAction(
     };
   }
 
+  const payloadRaw = formData.get("payload");
+  if (typeof payloadRaw !== "string") {
+    return { success: false, error: "Nieprawidłowe dane formularza." };
+  }
+
+  let data: FormularzData;
+  try {
+    data = JSON.parse(payloadRaw) as FormularzData;
+  } catch {
+    return { success: false, error: "Nieprawidłowe dane formularza." };
+  }
+
   const parseResult = formDataSchema.safeParse(data);
   if (!parseResult.success) {
-    const firstError = parseResult.error.issues[0]?.message ?? "Nieprawidłowe dane";
+    const firstError =
+      parseResult.error.issues[0]?.message ?? "Nieprawidłowe dane";
     return { success: false, error: firstError };
+  }
+
+  const files = formData.getAll("files").filter((entry): entry is File => {
+    return entry instanceof File && entry.size > 0;
+  });
+
+  const filesError = validateFiles(files);
+  if (filesError) {
+    return { success: false, error: filesError };
   }
 
   const { RESEND_API_KEY, ADMIN_EMAIL } = envResult.data;
@@ -55,7 +113,19 @@ export async function sendFormAction(
     .filter(Boolean)
     .join(" ");
 
-  const html = formatFormDataToHtml(data);
+  const attachmentFileNames = files.map((file) => file.name);
+  const html = formatFormDataToHtml(data, attachmentFileNames);
+
+  const attachments =
+    files.length > 0
+      ? await Promise.all(
+          files.map(async (file) => ({
+            filename: file.name,
+            content: Buffer.from(await file.arrayBuffer()),
+            contentType: file.type || undefined,
+          })),
+        )
+      : undefined;
 
   try {
     const { error } = await resend.emails.send({
@@ -63,6 +133,7 @@ export async function sendFormAction(
       to: ADMIN_EMAIL,
       subject: `Nowy formularz startowy — ${clientName || "Klient"}`,
       html,
+      attachments,
     });
 
     if (error) {
