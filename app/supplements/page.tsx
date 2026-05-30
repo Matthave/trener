@@ -3,12 +3,16 @@ import Link from "next/link";
 import { SlideIn } from "@/components/animations/SlideIn";
 import { EffectsText } from "./_components/EffectsText";
 import { SimpleStackSection } from "./_components/SimpleStackSection";
+import { SimpleStacksChart } from "./_components/SimpleStacksChart";
 import {
   supplements,
   effectCategories,
   bibliography,
 } from "./_data/supplements-data";
-import { simpleStacks } from "./_data/simple-stacks-data";
+import {
+  simpleStacks,
+  simpleStackRatingStacks,
+} from "./_data/simple-stacks-data";
 import { sleepStackItems } from "./_data/sleep-stack-data";
 
 export const metadata: Metadata = {
@@ -48,7 +52,7 @@ export default function SupplementsPage() {
           <section className="mb-16 sm:mb-24">
             <div className="mb-8 sm:mb-12">
               <h2 className="font-heading text-[22px] leading-[1.2] font-normal text-foreground sm:text-[28px] md:text-[34px]">
-                Ultimate Sleep Stack
+                Ultimate Sleep Supplements
               </h2>
               <div className="mt-3 h-px w-full max-w-[300px] bg-accent sm:mt-4" />
               <p className="mt-4 font-body text-[14px] leading-[24px] text-foreground/70 sm:text-[15px] sm:leading-[26px]">
@@ -79,28 +83,33 @@ export default function SupplementsPage() {
                         {supplement.dosage}
                       </div>
                     </div>
-                    {supplement.url && (
-                      <a
-                        href={supplement.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 inline-flex items-center gap-1.5 font-body text-[12px] leading-[1.4] text-accent/70 transition-colors hover:text-accent sm:text-[13px]"
-                      >
-                        <span>Link do produktu</span>
-                        <svg
-                          className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                          />
-                        </svg>
-                      </a>
+                    {supplement.links && supplement.links.length > 0 && (
+                      <div className="mt-3 flex flex-col gap-2">
+                        {supplement.links.map((link) => (
+                          <a
+                            key={link.url}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 font-body text-[12px] leading-[1.4] text-accent/70 transition-colors hover:text-accent sm:text-[13px]"
+                          >
+                            <span>{link.label ?? "Link do produktu"}</span>
+                            <svg
+                              className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                              />
+                            </svg>
+                          </a>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </SlideIn>
@@ -112,9 +121,12 @@ export default function SupplementsPage() {
             <SimpleStackSection
               key={stack.title}
               stack={stack}
+              rating={simpleStackRatingStacks[index]}
               startIndex={index * stack.items.length}
             />
           ))}
+
+          <SimpleStacksChart />
 
           {/* Sleep-Stack Table Section */}
           <section className="mb-16 sm:mb-24">

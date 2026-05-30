@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Apple, Dumbbell, Moon } from "lucide-react";
+import { useInView, useReducedMotion } from "framer-motion";
 import { SlideUp } from "@/components/animations/SlideUp";
 
 const pillars = [
@@ -40,7 +42,59 @@ const stats = [
   },
 ] as const;
 
+function AnimatedPercentage({
+  shouldAnimate,
+  value,
+}: {
+  shouldAnimate: boolean;
+  value: string;
+}) {
+  const targetValue = Number.parseInt(value, 10);
+  const suffix = value.replace(`${targetValue}`, "");
+  const prefersReducedMotion = useReducedMotion();
+  const [displayValue, setDisplayValue] = useState(0);
+  const valueToRender =
+    targetValue === 0 || (prefersReducedMotion && shouldAnimate)
+      ? targetValue
+      : displayValue;
+
+  useEffect(() => {
+    if (targetValue === 0 || !shouldAnimate || prefersReducedMotion) {
+      return;
+    }
+
+    let animationFrame = 0;
+    const duration = 3000;
+    const startTime = performance.now();
+
+    const updateValue = (currentTime: number) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easedProgress = 1 - (1 - progress) ** 3;
+
+      setDisplayValue(Math.round(targetValue * easedProgress));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(updateValue);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(updateValue);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [prefersReducedMotion, shouldAnimate, targetValue]);
+
+  return (
+    <>
+      {valueToRender}
+      {suffix}
+    </>
+  );
+}
+
 export function AboutMeSection() {
+  const statsRef = useRef<HTMLDivElement>(null);
+  const statsInView = useInView(statsRef, { amount: 0.35, once: true });
+
   return (
     <section id="about-me" className="  px-6 py-24 sm:px-10 xl:pr-42 xl:py-32">
       <div className="mx-auto max-w-[1920px]">
@@ -131,7 +185,7 @@ export function AboutMeSection() {
             <p className="max-w-2xl font-body text-sm leading-[1.9] text-foreground/78 sm:text-base">
               Wierzę, że{" "}
               <strong className="text-foreground">
-                ciało działa jak system
+                ciało działa jako całość
               </strong>
               : trening bez dobrego snu i odżywiania szybko trafia na ścianę.
               Przez lata pracy z podopiecznymi wypracowałem metodę, która łączy
@@ -140,7 +194,10 @@ export function AboutMeSection() {
               skrojony pod konkretną osobę.
             </p>
 
-            <div className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-18 sm:grid-cols-3">
+            <div
+              ref={statsRef}
+              className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-18 sm:grid-cols-3"
+            >
               {stats.map((stat) => (
                 <div
                   key={stat.value}
@@ -148,7 +205,10 @@ export function AboutMeSection() {
                 >
                   <div className="absolute left-1/2 top-0 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-accent [clip-path:polygon(50%_0,100%_20%,94%_70%,50%_100%,6%_70%,0_20%)] sm:h-29 sm:w-29">
                     <span className="font-heading text-xl font-bold text-background lg:text-[22px]">
-                      {stat.value}
+                      <AnimatedPercentage
+                        shouldAnimate={statsInView}
+                        value={stat.value}
+                      />
                     </span>
                   </div>
 
