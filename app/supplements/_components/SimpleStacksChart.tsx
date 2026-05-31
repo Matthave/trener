@@ -15,14 +15,23 @@ import type { TooltipContentProps } from "recharts";
 
 import { cn } from "@/lib/utils";
 
-import {
-  simpleStackChartCategories,
-  simpleStackChartStacks,
-  type SimpleStackChartCategoryKey,
-  type SimpleStackChartDatum,
+import type {
+  SimpleStackChartCategoryKey,
+  SimpleStackChartDatum,
+  SimpleStackChartStack,
 } from "../_data/simple-stacks-data";
 
 const yAxisTicks = [3, 4, 5, 6, 7, 8, 9, 10];
+
+interface SimpleStacksChartProps {
+  categories: readonly {
+    key: SimpleStackChartCategoryKey;
+    label: string;
+  }[];
+  eyebrow: string;
+  stacks: SimpleStackChartStack[];
+  title: string;
+}
 
 function SimpleStackTooltip({
   active,
@@ -51,17 +60,22 @@ function SimpleStackTooltip({
   );
 }
 
-export function SimpleStacksChart() {
+export function SimpleStacksChart({
+  categories,
+  eyebrow,
+  stacks,
+  title,
+}: SimpleStacksChartProps) {
   const [activeCategory, setActiveCategory] =
     useState<SimpleStackChartCategoryKey>("general");
 
   const chartData = useMemo<SimpleStackChartDatum[]>(
     () =>
-      simpleStackChartStacks.map((stack) => ({
+      stacks.map((stack) => ({
         ...stack,
         score: stack.scores[activeCategory],
       })),
-    [activeCategory],
+    [activeCategory, stacks],
   );
 
   return (
@@ -69,15 +83,15 @@ export function SimpleStacksChart() {
       <div className="rounded-[4px] border border-foreground/20 bg-background/60 p-4 shadow-[0_0_0_1px_rgba(198,198,198,0.04)] backdrop-blur-[2px] sm:p-6 lg:p-7">
         <div className="mb-5 flex flex-col gap-2 sm:mb-6">
           <p className="font-heading text-[10px] uppercase tracking-[0.25em] text-accent sm:text-xs">
-            Porównanie
+            {eyebrow}
           </p>
           <h2 className="font-heading text-[18px] leading-[1.3] font-normal text-foreground sm:text-[24px] md:text-[28px]">
-            Porównanie ze wszystkimi stackami
+            {title}
           </h2>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {simpleStackChartCategories.map((category) => {
+          {categories.map((category) => {
             const isActive = category.key === activeCategory;
 
             return (
@@ -100,7 +114,7 @@ export function SimpleStacksChart() {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-x-4 gap-y-3 sm:mt-6">
-          {simpleStackChartStacks.map((stack) => (
+          {stacks.map((stack) => (
             <div
               key={stack.name}
               className={cn(
