@@ -219,7 +219,10 @@ function BlurShell({
 }) {
   return (
     <div className="relative overflow-hidden">
-      <div className={`pointer-events-none select-none blur-[${blur}px] p-2`}>
+      <div
+        className="pointer-events-none select-none p-2"
+        style={{ filter: `blur(${blur}px)` }}
+      >
         {children}
       </div>
       <div
